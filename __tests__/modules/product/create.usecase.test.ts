@@ -10,7 +10,7 @@ describe("Product - Create - UseCase", () => {
   });
 
   const productMock: ICreateProductRequestDTO = {
-    name: "sdds",
+    name: "test",
     price_unit: 1,
     amount: 0,
   };
