@@ -3,7 +3,7 @@ import { CustomerData } from "../database/entities/customer.data.entity";
 export type ICustomerRepositoryCreate = Omit<CustomerData, "id">;
 
 export interface ICustomerRepositoryFindUnique {
-  where: Partial<Pick<CustomerData, "id">>;
+  where: Partial<Pick<CustomerData, "id" | "name">>;
 }
 
 export interface ICustomerRepositoryFindMany {
