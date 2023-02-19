@@ -1,5 +1,5 @@
 import { CustomerEntity } from "../../../entities/";
-import { ICustomerRepository } from "../../../implements/customer.repository.interface";
+import { ICustomerRepository } from "../../../implements";
 import { ICreateCustomerRequestDTO } from "./create.dto";
 
 export class CreateCustomerUseCase {
