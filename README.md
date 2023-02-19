@@ -7,3 +7,8 @@
 - get all product
 - update a product (name, price_unit, amount)
 - delete a product by id
+
+### Customer - UseCases
+
+- create a new customer. (name)
+- find customer (by id, name)
