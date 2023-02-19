@@ -1,4 +1,4 @@
-import { CustomerEntity } from "../../../entities/customer.entity";
+import { CustomerEntity } from "../../../entities/";
 import { ICustomerRepository } from "../../../implements/customer.repository.interface";
 import { ICreateCustomerRequestDTO } from "./create.dto";
 
