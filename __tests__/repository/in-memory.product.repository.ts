@@ -3,7 +3,8 @@ import { ProductData } from "../../src/database/entities/product.data.entity";
 import {
   IProductRepository,
   IProductRepositoryCreate,
-  IProductRepositoryFind,
+  IProductRepositoryFindMany,
+  IProductRepositoryFindUnique,
 } from "../../src/implements/product.repository.interface";
 
 const Products: ProductData[] = [
@@ -34,22 +35,19 @@ export class InMemoryProductRepository implements IProductRepository {
     return new ProductData(newProduct);
   }
 
-  async findUnique(data: IProductRepositoryFind): Promise<ProductData | null> {
-    const { name, price_unit, amount, id } = data.where;
+  async findUnique(
+    data: IProductRepositoryFindUnique
+  ): Promise<ProductData | null> {
+    const { name, id } = data.where;
     const product = Products.find((elem) => {
-      if (
-        elem.name == name ||
-        elem.id == id ||
-        elem.price_unit == price_unit ||
-        elem.amount == amount
-      ) {
+      if (elem.name == name || elem.id == id) {
         return elem;
       }
     });
     return product ? new ProductData(product) : null;
   }
 
-  async findMany(data: IProductRepositoryFind): Promise<ProductData[]> {
+  async findMany(data: IProductRepositoryFindMany): Promise<ProductData[]> {
     const { name, price_unit, amount, id } = data.where;
 
     if (Object.entries(data.where).length == 0)
