@@ -42,6 +42,9 @@ export class InMemoryCustomerRepository implements ICustomerRepository {
   async findMany(data: ICustomerRepositoryFindMany): Promise<CustomerData[]> {
     const customers: CustomerData[] = [];
 
+    if (Object.entries(data.where).length == 0)
+      return Customers.map((elem) => new CustomerData(elem));
+
     Customers.forEach((customer) => {
       if (customer.name == data.where.name || customer.id == data.where.id) {
         customers.push(customer);
