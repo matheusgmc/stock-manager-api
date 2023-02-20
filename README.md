@@ -12,3 +12,10 @@
 
 - create a new customer. (name)
 - find customer (by id, name)
+
+### Log - UseCases
+
+- create a new log a sold product if it doesn't already exist.
+- update a log by adding a new sold product.
+
+### Sale - UseCases
