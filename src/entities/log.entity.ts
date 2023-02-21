@@ -16,9 +16,15 @@ export class LogEntity implements ILogEntityNew {
 
   constructor(props: ILogEntityNew) {
     Object.assign(this, props);
+    Object.freeze(this);
   }
 
   static create(data: LogData): LogEntity {
-    return new LogEntity(data);
+    const sales = data.sales.map((elem) => SaleEntity.create(elem));
+
+    return new LogEntity({
+      ...data,
+      sales,
+    });
   }
 }
