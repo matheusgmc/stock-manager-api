@@ -1,13 +1,18 @@
-import { LogData } from "../database/entities/log.data.entity";
-import { CustomerEntity } from "./customer.entity";
-import { ProductEntity } from "./product.entity";
+import { LogData } from "../database/entities/";
+import { SaleEntity } from "./sale.entity";
 
-export interface ILogEntityNew {}
-
-export class LogEntity {
+export interface ILogEntityNew {
   id: string;
-  product: ProductEntity;
-  customer: CustomerEntity;
+  sales: SaleEntity[];
+  created_at: string;
+  updated_at: string;
+}
+
+export class LogEntity implements ILogEntityNew {
+  id: string;
+  sales: SaleEntity[];
+  created_at: string;
+  updated_at: string;
 
   constructor(props: ILogEntityNew) {
     Object.assign(this, props);
