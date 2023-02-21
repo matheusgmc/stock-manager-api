@@ -1,5 +1,3 @@
-import { CustomerData } from "./customer.data.entity";
-import { ProductData } from "./product.data.entity";
 import { SaleData } from "./sale.data.entity";
 
 export class LogData {
