@@ -1,18 +1,41 @@
 import { randomUUID } from "node:crypto";
 import { LogData } from "../../src/database/entities/log.data.entity";
-import { ILogRepository, ILogRepositoryCreate } from "../../src/implements/";
-
-const Logs: LogData[] = [];
+import {
+  ILogRepository,
+  ILogRepositoryAppend,
+  ILogRepositoryCreate,
+} from "../../src/implements/";
 
 export class InMemoryLogRepository implements ILogRepository {
-  async create(data: ILogRepositoryCreate): Promise<LogData> {
+  Logs: LogData[] = [];
+  async create(data: ILogRepositoryCreate): Promise<void> {
     const newLog: LogData = {
-      customer: data.customer,
-      product: data.product,
       id: randomUUID(),
+      sales: [
+        {
+          ...data.sale,
+          payment_method: data.sale.payment.method as string,
+          payment_status: data.sale.payment.status as string,
+        },
+      ],
+      created_at: data.created_at,
+      updated_at: data.created_at,
     };
 
-    Logs.push(newLog);
-    return new LogData(newLog);
+    this.Logs.push(newLog);
+  }
+
+  async append(data: ILogRepositoryAppend): Promise<void> {
+    const logToday = this.Logs.find((log) => log.id === data.id) as LogData;
+    logToday.sales.push({
+      ...data.sale,
+      payment_method: data.sale.payment.method as string,
+      payment_status: data.sale.payment.status as string,
+    });
+  }
+
+  async findToday(today: string): Promise<LogData | null> {
+    const logToday = this.Logs.find((log) => log.created_at === today);
+    return logToday ? logToday : null;
   }
 }
