@@ -4,7 +4,7 @@ import { PaymentEntity } from "./payment.entity";
 import { ProductEntity } from "./product.entity";
 
 export interface ISaleEntityNew {
-  id?: string;
+  id: string;
   product: ProductEntity;
   customer: CustomerEntity;
   payment: PaymentEntity;
@@ -12,7 +12,7 @@ export interface ISaleEntityNew {
 }
 
 export class SaleEntity implements ISaleEntityNew {
-  id?: string;
+  id: string;
   product: ProductEntity;
   customer: CustomerEntity;
   payment: PaymentEntity;
@@ -23,7 +23,7 @@ export class SaleEntity implements ISaleEntityNew {
     Object.freeze(this);
   }
 
-  static create(data: Omit<SaleData, "id">): SaleEntity {
+  static create(data: SaleData): SaleEntity {
     if (!data) throw new Error("data must not be empty to create a Sale");
 
     const payment = PaymentEntity.create({
