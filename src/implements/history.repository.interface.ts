@@ -15,5 +15,6 @@ export interface IHistoryRepository {
   create(data: IHistoryRepositoryCreate): Promise<void>;
   append(data: IHistoryRepositoryAppend): Promise<void>;
 
-  findToday(today: string): Promise<HistoryData | null>;
+  findDate(today: string): Promise<HistoryData | null>;
+  findById(id: string): Promise<HistoryData | null>;
 }
