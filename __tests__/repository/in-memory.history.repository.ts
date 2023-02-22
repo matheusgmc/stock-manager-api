@@ -1,15 +1,15 @@
 import { randomUUID } from "node:crypto";
-import { LogData } from "../../src/database/entities/log.data.entity";
+import { HistoryData } from "../../src/database/entities/";
 import {
-  ILogRepository,
-  ILogRepositoryAppend,
-  ILogRepositoryCreate,
+  IHistoryRepository,
+  IHistoryRepositoryAppend,
+  IHistoryRepositoryCreate,
 } from "../../src/implements/";
 
-export class InMemoryLogRepository implements ILogRepository {
-  Logs: LogData[] = [];
-  async create(data: ILogRepositoryCreate): Promise<void> {
-    const newLog: LogData = {
+export class InMemoryHistoryRepository implements IHistoryRepository {
+  Logs: HistoryData[] = [];
+  async create(data: IHistoryRepositoryCreate): Promise<void> {
+    const newLog: HistoryData = {
       id: randomUUID(),
       sales: [
         {
@@ -25,8 +25,8 @@ export class InMemoryLogRepository implements ILogRepository {
     this.Logs.push(newLog);
   }
 
-  async append(data: ILogRepositoryAppend): Promise<void> {
-    const logToday = this.Logs.find((log) => log.id === data.id) as LogData;
+  async append(data: IHistoryRepositoryAppend): Promise<void> {
+    const logToday = this.Logs.find((log) => log.id === data.id) as HistoryData;
     logToday.sales.push({
       ...data.sale,
       payment_method: data.sale.payment.method as string,
@@ -34,7 +34,7 @@ export class InMemoryLogRepository implements ILogRepository {
     });
   }
 
-  async findToday(today: string): Promise<LogData | null> {
+  async findToday(today: string): Promise<HistoryData | null> {
     const logToday = this.Logs.find((log) => log.created_at === today);
     return logToday ? logToday : null;
   }
