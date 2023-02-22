@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { inMemorySaleRepository } from ".";
 import { HistoryData } from "../../src/database/entities/";
 import {
   IHistoryRepository,
@@ -7,7 +8,21 @@ import {
 } from "../../src/implements/";
 
 export class InMemoryHistoryRepository implements IHistoryRepository {
-  Logs: HistoryData[] = [];
+  Logs: HistoryData[] = [
+    {
+      id: "1",
+      sales: [],
+      created_at: "22/02/2023",
+      updated_at: "22/02/2023 16:55:55",
+    },
+    {
+      id: "2",
+      sales: [inMemorySaleRepository.Sales[0]],
+      created_at: "23/02/2023",
+      updated_at: "24/02/2023 13:40:40",
+    },
+  ];
+
   async create(data: IHistoryRepositoryCreate): Promise<void> {
     const newLog: HistoryData = {
       id: randomUUID(),
@@ -34,8 +49,13 @@ export class InMemoryHistoryRepository implements IHistoryRepository {
     });
   }
 
-  async findToday(today: string): Promise<HistoryData | null> {
+  async findDate(today: string): Promise<HistoryData | null> {
     const logToday = this.Logs.find((log) => log.created_at === today);
     return logToday ? logToday : null;
+  }
+
+  async findById(id: string): Promise<HistoryData | null> {
+    const log = this.Logs.find((log) => log.id === id);
+    return log ? log : null;
   }
 }

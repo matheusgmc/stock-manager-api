@@ -5,5 +5,5 @@ import { InMemorySaleRepository } from "./in-memory.sale.repository";
 
 export const inMemoryProductRepository = new InMemoryProductRepository();
 export const inMemoryCustomerRepository = new InMemoryCustomerRepository();
-export const inMemoryHistoryRepository = new InMemoryHistoryRepository();
 export const inMemorySaleRepository = new InMemorySaleRepository();
+export const inMemoryHistoryRepository = new InMemoryHistoryRepository();
