@@ -14,8 +14,7 @@ export class FindHistoryUseCase {
     }
 
     if (dto.today) {
-      const [today] = new Date().toLocaleString().split(" ")[0];
-      history = await this.HistoryRepository.findDate(today);
+      history = await this.HistoryRepository.findDate(dto.today);
     }
 
     if (!history) throw new Error("history not found");
