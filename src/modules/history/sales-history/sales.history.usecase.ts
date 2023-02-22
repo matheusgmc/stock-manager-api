@@ -12,7 +12,7 @@ export class SalesHistoryUseCase {
 
     const [today] = new Date().toLocaleString().split(" ");
 
-    const historyIsExist = await this.HistoryRepository.findToday(today);
+    const historyIsExist = await this.HistoryRepository.findDate(today);
     if (historyIsExist) {
       await this.HistoryRepository.append({
         sale: dto.sale,
