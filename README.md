@@ -17,7 +17,7 @@
 
 - create a new Sale, it must have payment method and status, product sold and the customer
 
-### Log - UseCases
+### History - UseCases
 
-- create a new log, on the day if it doesn't exist
-- update a log by adding a new Sale
+- create a new history, on the day if it doesn't exist
+- update a history by adding a new Sale
