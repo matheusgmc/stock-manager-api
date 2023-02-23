@@ -1,5 +1,17 @@
+import { PrismaProductRepository } from "../../../database";
+import { CreateProductController } from "./create.controller";
 import { CreateProductUseCase } from "./create.usecase";
 
-const createProductUseCase = new CreateProductUseCase();
+const ProductRepository = new PrismaProductRepository();
+const createProductUseCase = new CreateProductUseCase(ProductRepository);
 
-export { createProductUseCase, CreateProductUseCase };
+const createProductController = new CreateProductController(
+  createProductUseCase
+);
+
+export {
+  createProductUseCase,
+  createProductController,
+  CreateProductUseCase,
+  CreateProductController,
+};
