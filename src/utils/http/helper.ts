@@ -11,6 +11,12 @@ export interface IHttpRequest<Body = any> {
   params?: any;
   query?: any;
 }
+
+export const OK = (data: any): IHttpResponse => ({
+  statusCode: 200,
+  data,
+});
+
 export const Created = (data: any): IHttpResponse => ({
   statusCode: 201,
   data,
