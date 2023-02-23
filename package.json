@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "npx tsx watch src/server.ts",
-    "test": "jest"
+    "test": "npx jest",
+    "prisma:gen": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
