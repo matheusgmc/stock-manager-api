@@ -1,4 +1,5 @@
 import { ProductData } from "../../../src/database/entities/product.data.entity";
+import { NotFoundError } from "../../../src/modules/errors";
 import { FindProductUseCase } from "../../../src/modules/product";
 import { inMemoryProductRepository } from "../../repository";
 
@@ -46,18 +47,22 @@ describe("Product - Find - UseCase", () => {
   });
 
   it("should fail if id not found a product", async () => {
-    await expect(
-      suit.execute({
-        id: "3",
-      })
-    ).rejects.toHaveProperty("message", "product not found");
+    const data = await suit.execute({
+      id: "3",
+    });
+
+    expect(data).toBeInstanceOf(NotFoundError);
+    expect(data).toHaveProperty("message", "product not found");
+    expect(data).toHaveProperty("name", "NotFound");
   });
 
   it("should fail if name not found a product", async () => {
-    await expect(
-      suit.execute({
-        name: "test",
-      })
-    ).rejects.toHaveProperty("message", "product not found");
+    const data = await suit.execute({
+      name: "test",
+    });
+
+    expect(data).toBeInstanceOf(NotFoundError);
+    expect(data).toHaveProperty("message", "product not found");
+    expect(data).toHaveProperty("name", "NotFound");
   });
 });

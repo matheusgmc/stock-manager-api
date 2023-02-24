@@ -1,6 +1,10 @@
 import { inMemoryProductRepository } from "../../repository/";
 import { CreateProductUseCase } from "../../../src/modules/product/create/";
 import { ICreateProductRequestDTO } from "../../../src/modules/product/create/create.dto";
+import {
+  AlreadyExistsError,
+  ParamsInvalidError,
+} from "../../../src/modules/errors";
 describe("Product - Create - UseCase", () => {
   const suit = new CreateProductUseCase(inMemoryProductRepository);
 
@@ -26,22 +30,27 @@ describe("Product - Create - UseCase", () => {
   });
 
   it("should fail if create a product without name", async () => {
-    await expect(
-      suit.execute({ ...productMock, name: "" })
-    ).rejects.toHaveProperty("message", "params isn't valid");
+    const data = await suit.execute({ ...productMock, name: "" });
+
+    expect(data).toBeInstanceOf(ParamsInvalidError);
+    expect(data).toHaveProperty("message", "name or price_unit is invalid");
+    expect(data).toHaveProperty("name", "ParamsInvalid");
   });
 
   it("should fail if create a new product without price", async () => {
-    await expect(
-      //@ts-ignore
-      suit.execute({ ...productMock, price_unit: "" })
-    ).rejects.toHaveProperty("message", "params isn't valid");
+    //@ts-ignore
+    const data = await suit.execute({ ...productMock, price_unit: "" });
+
+    expect(data).toBeInstanceOf(ParamsInvalidError);
+    expect(data).toHaveProperty("message", "name or price_unit is invalid");
+    expect(data).toHaveProperty("name", "ParamsInvalid");
   });
 
   it("should fail if a product with the same name already exists", async () => {
-    await expect(suit.execute(productMock)).rejects.toHaveProperty(
-      "message",
-      "product already exists"
-    );
+    const data = await suit.execute(productMock);
+
+    expect(data).toBeInstanceOf(AlreadyExistsError);
+    expect(data).toHaveProperty("message", "product already exists");
+    expect(data).toHaveProperty("name", "AlreadyExists");
   });
 });

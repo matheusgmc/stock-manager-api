@@ -1,3 +1,8 @@
+import {
+  NotFoundError,
+  ParamsInvalidError,
+  ParamsRequiredError,
+} from "../../../src/modules/errors";
 import { UpdateProductUseCase } from "../../../src/modules/product";
 import { IUpdateProductRequestDTO } from "../../../src/modules/product/update/update.dto";
 import { inMemoryProductRepository } from "../../repository";
@@ -32,29 +37,42 @@ describe("Product - Update - UseCase", () => {
     );
   });
   it("should fail if no fields have been changed", async () => {
-    await expect(
-      //@ts-ignore
-      suit.execute({ ...dtoMock, data: { test: "" } })
-    ).rejects.toHaveProperty("message", "data isn't valid");
+    //@ts-ignore
+    const data = await suit.execute({ ...dtoMock, data: { test: "" } });
+    expect(data).toBeInstanceOf(ParamsInvalidError);
+    expect(data).toHaveProperty("message", "data isn't valid");
+    expect(data).toHaveProperty("name", "ParamsInvalid");
   });
 
   it("should fail if product not found", async () => {
-    await expect(suit.execute({ ...dtoMock, id: "3" })).rejects.toHaveProperty(
-      "message",
-      "product not found"
-    );
+    const data = await suit.execute({ ...dtoMock, id: "3" });
+
+    expect(data).toBeInstanceOf(NotFoundError);
+    expect(data).toHaveProperty("message", "product not found");
+    expect(data).toHaveProperty("name", "NotFound");
   });
 
-  it("should fail if data is empty or undefined", async () => {
+  it("should fail if id is empty", async () => {
     //@ts-ignore
-    await expect(suit.execute({ ...dtoMock, data: {} })).rejects.toHaveProperty(
-      "message",
-      "at least one data is required"
-    );
+    const data = await suit.execute({ id: "", data: {} });
+    expect(data).toBeInstanceOf(ParamsRequiredError);
+    expect(data).toHaveProperty("message", "id is required");
+    expect(data).toHaveProperty("name", "ParamsRequired");
+  });
 
-    await expect(
-      //@ts-ignore
-      suit.execute({ ...dtoMock, data: undefined })
-    ).rejects.toHaveProperty("message", "at least one data is required");
+  it("should fail if data is empty", async () => {
+    //@ts-ignore
+    const data = await suit.execute({ ...dtoMock, data: {} });
+    expect(data).toBeInstanceOf(ParamsRequiredError);
+    expect(data).toHaveProperty("message", "at least one data is required");
+    expect(data).toHaveProperty("name", "ParamsRequired");
+  });
+
+  it("should fail if data is undefined", async () => {
+    //@ts-ignore
+    const data = await suit.execute({ ...dtoMock, data: undefined });
+    expect(data).toBeInstanceOf(ParamsRequiredError);
+    expect(data).toHaveProperty("message", "at least one data is required");
+    expect(data).toHaveProperty("name", "ParamsRequired");
   });
 });
