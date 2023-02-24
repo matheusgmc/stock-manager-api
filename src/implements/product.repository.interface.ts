@@ -32,6 +32,7 @@ export interface IProductRepository {
   findAndUpdateName(id: string, name: string): Promise<void>;
   findAndUpdatePriceUnit(id: string, price_unit: number): Promise<void>;
   findAndUpdateAmount(id: string, amount: number): Promise<void>;
+  findAndUpdateDate(id: string, updated_at: string): Promise<void>;
 
   findByIdAndDelete(id: string): Promise<void>;
 }
