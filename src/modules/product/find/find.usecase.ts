@@ -1,5 +1,6 @@
 import { ProductEntity } from "../../../entities";
 import { IProductRepository } from "../../../implements/product.repository.interface";
+import { NotFoundError } from "../../errors";
 import { IFindProductRequestDTO } from "./find.dto";
 
 export class FindProductUseCase {
@@ -16,6 +17,7 @@ export class FindProductUseCase {
           id: dto.id,
         },
       });
+      if (!data) throw new NotFoundError("product not found");
     }
 
     if (dto.name) {
@@ -24,6 +26,7 @@ export class FindProductUseCase {
           name: dto.name,
         },
       });
+      if (!data) throw new NotFoundError("product not found");
     }
     if (!data) {
       data = await this.ProductRepository.findMany({ where: {} });
