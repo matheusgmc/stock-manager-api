@@ -48,6 +48,10 @@ export class PrismaProductRepository implements IProductRepository {
   async findAndUpdatePriceUnit(id: string, price_unit: number): Promise<void> {
     await this.database.update({ where: { id }, data: { price_unit } });
   }
+
+  async findAndUpdateDate(id: string, updated_at: string): Promise<void> {
+    await this.database.update({ where: { id }, data: { updated_at } });
+  }
   async findByIdAndDelete(id: string): Promise<void> {
     await this.database.delete({ where: { id } });
   }
