@@ -16,6 +16,8 @@ export class PrismaProductRepository implements IProductRepository {
         name: data.name,
         amount: data.amount,
         price_unit: data.price_unit,
+        updated_at: data.created_at,
+        created_at: data.created_at,
       },
     });
     return new ProductData(newProduct);
