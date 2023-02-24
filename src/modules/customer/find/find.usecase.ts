@@ -1,5 +1,6 @@
 import { CustomerEntity } from "../../../entities";
 import { ICustomerRepository } from "../../../implements";
+import { Validation } from "../../../utils/validation";
 import { IFindCustomerRequestDTO } from "./find.dto";
 
 export class FindCustomerUseCase {
@@ -9,7 +10,7 @@ export class FindCustomerUseCase {
     dto: IFindCustomerRequestDTO
   ): Promise<CustomerEntity | CustomerEntity[]> {
     let data = null;
-    if (Object.entries(dto).length == 0) {
+    if (Validation.ObjectIsEmpty(dto)) {
       const data = await this.CustomerRepository.findMany({ where: {} });
       return data.map((elem) => CustomerEntity.create(elem));
     }

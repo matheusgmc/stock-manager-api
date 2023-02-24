@@ -1,11 +1,12 @@
 import { HistoryEntity } from "../../../entities";
 import { IHistoryRepository } from "../../../implements";
+import { Validation } from "../../../utils/validation";
 import { IFindHistoryRequestDTO } from "./find.dto";
 
 export class FindHistoryUseCase {
   constructor(private HistoryRepository: IHistoryRepository) {}
   async execute(dto: IFindHistoryRequestDTO): Promise<HistoryEntity> {
-    if (Object.entries(dto).length == 0) throw new Error("dto isn't empty");
+    if (Validation.ObjectIsEmpty(dto)) throw new Error("dto isn't empty");
 
     let history = null;
 

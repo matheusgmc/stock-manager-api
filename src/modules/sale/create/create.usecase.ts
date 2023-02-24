@@ -9,6 +9,7 @@ import {
   IProductRepository,
   ISaleRepository,
 } from "../../../implements";
+import { Validation } from "../../../utils/validation";
 import { ICreateSaleRequestDTO } from "./create.dto";
 
 export class CreateSaleUseCase {
@@ -19,8 +20,7 @@ export class CreateSaleUseCase {
   ) {}
 
   async execute(dto: ICreateSaleRequestDTO): Promise<SaleEntity> {
-    if (Object.entries(dto).length == 0)
-      throw new Error("dto must not be empty");
+    if (Validation.ObjectIsEmpty(dto)) throw new Error("dto must not be empty");
 
     if (!dto.product_id || !dto.customer_id) throw new Error("dto isn't valid");
 

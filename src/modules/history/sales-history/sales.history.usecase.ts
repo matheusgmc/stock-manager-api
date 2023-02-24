@@ -1,13 +1,14 @@
 import { IHistoryRepository } from "../../../implements";
+import { Validation } from "../../../utils/validation";
 import { ISalesHistoryRequestDTO } from "./sales.history.dto";
 
 export class SalesHistoryUseCase {
   constructor(private HistoryRepository: IHistoryRepository) {}
 
   async execute(dto: ISalesHistoryRequestDTO): Promise<void> {
-    if (Object.entries(dto).length == 0) throw new Error("dto isn't empty");
+    if (Validation.ObjectIsEmpty(dto)) throw new Error("dto isn't empty");
 
-    if (!dto.sale || Object.entries(dto.sale).length == 0)
+    if (!dto.sale || Validation.ObjectIsEmpty(dto.sale))
       throw new Error("sale isn't valid");
 
     const [today] = new Date().toLocaleString().split(" ");
