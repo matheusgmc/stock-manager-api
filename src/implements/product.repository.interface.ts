@@ -5,7 +5,7 @@ import {
 
 export type IProductRepositoryCreate = Omit<
   IProductDataNew,
-  "id" | "amount"
+  "id" | "amount" | "updated_at"
 > & {
   amount?: number;
 };
