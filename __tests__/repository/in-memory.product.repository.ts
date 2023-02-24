@@ -14,12 +14,16 @@ export class InMemoryProductRepository implements IProductRepository {
       name: "test_mock_1",
       price_unit: 1,
       amount: 1,
+      created_at: "21/02/2023",
+      updated_at: "21/02/2023",
     },
     {
       id: "2",
       name: "test_mock_2",
       price_unit: 1,
       amount: 1,
+      created_at: "22/02/2023",
+      updated_at: "23/02/2023",
     },
   ];
   async create(data: IProductRepositoryCreate): Promise<ProductData> {
@@ -28,6 +32,8 @@ export class InMemoryProductRepository implements IProductRepository {
       amount: data.amount ? data.amount : 0,
       price_unit: data.price_unit,
       name: data.name,
+      created_at: data.created_at,
+      updated_at: data.created_at,
     };
 
     this.Products.push(newProduct);

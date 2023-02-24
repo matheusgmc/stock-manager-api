@@ -9,7 +9,7 @@ import {
 export class InMemorySaleRepository implements ISaleRepository {
   Sales: SaleData[] = [
     {
-      created_at: new Date().toString(),
+      created_at: new Date().toLocaleString(),
       id: "1",
       payment_status: "DONE",
       payment_method: "PIX",
@@ -18,7 +18,7 @@ export class InMemorySaleRepository implements ISaleRepository {
     },
 
     {
-      created_at: new Date().toString(),
+      created_at: new Date().toLocaleString(),
       id: "2",
       payment_status: "PENDING",
       payment_method: "CASH",
