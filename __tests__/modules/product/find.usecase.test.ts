@@ -44,4 +44,20 @@ describe("Product - Find - UseCase", () => {
       expect(product).toHaveProperty("amount");
     });
   });
+
+  it("should fail if id not found a product", async () => {
+    await expect(
+      suit.execute({
+        id: "3",
+      })
+    ).rejects.toHaveProperty("message", "product not found");
+  });
+
+  it("should fail if name not found a product", async () => {
+    await expect(
+      suit.execute({
+        name: "test",
+      })
+    ).rejects.toHaveProperty("message", "product not found");
+  });
 });
