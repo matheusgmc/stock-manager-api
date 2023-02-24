@@ -1,6 +1,7 @@
 import { ProductData } from "../../../database/entities/product.data.entity";
 import { ProductEntity } from "../../../entities";
 import { IProductRepository } from "../../../implements/product.repository.interface";
+import { Validation } from "../../../utils/validation";
 import { IUpdateProductRequestDTO } from "./update.dto";
 
 export class UpdateProductUseCase {
@@ -9,8 +10,11 @@ export class UpdateProductUseCase {
   async execute(dto: IUpdateProductRequestDTO): Promise<ProductEntity> {
     if (!dto.id) throw new Error("id is required");
 
-    if (!dto.data || Object.entries(dto.data).length == 0)
+    if (!dto.data || Validation.ObjectIsEmpty(dto.data))
       throw new Error("at least one data is required");
+
+    if (Validation.ObjectKeyIsValid(ProductEntity, dto.data))
+      throw new Error("data isn't valid");
 
     const original = await this.ProductRepository.findUnique({
       where: { id: dto.id },
@@ -45,6 +49,9 @@ export class UpdateProductUseCase {
         changedProduct.amount
       );
     }
+
+    const today = new Date().toLocaleString().split(" ")[0];
+    await this.ProductRepository.findAndUpdateDate(dto.id, today);
 
     return ProductEntity.create(
       (await this.ProductRepository.findUnique({
