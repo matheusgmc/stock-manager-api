@@ -2,17 +2,22 @@ import { ProductEntity } from "../../../entities/product.entity";
 import { IProductRepository } from "../../../implements/product.repository.interface";
 import { ICreateProductRequestDTO } from "./create.dto";
 
-import { AlreadyExistsError } from "../../errors";
+import {
+  AlreadyExistsError,
+  DtoIsEmptyError,
+  ParamsInvalidError,
+} from "../../errors";
 import { Validation } from "../../../utils/validation";
 
 export class CreateProductUseCase {
   constructor(private ProductRepository: IProductRepository) {}
 
-  async execute(dto: ICreateProductRequestDTO): Promise<ProductEntity> {
+  async execute(dto: ICreateProductRequestDTO): Promise<Error | ProductEntity> {
     if (!dto || Validation.ObjectIsEmpty(dto))
-      throw new Error("dto isn't empty");
+      return new DtoIsEmptyError("dto cannot be empty");
 
-    if (!dto.name || !dto.price_unit) throw new Error("params isn't valid");
+    if (!dto.name || !dto.price_unit)
+      return new ParamsInvalidError("name or price_unit is invalid");
 
     if (
       await this.ProductRepository.findUnique({
@@ -21,7 +26,7 @@ export class CreateProductUseCase {
         },
       })
     )
-      throw new AlreadyExistsError("product");
+      return new AlreadyExistsError("product");
 
     const today = new Date().toLocaleString().split(" ")[0];
     const newProduct = await this.ProductRepository.create({

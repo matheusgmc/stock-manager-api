@@ -8,7 +8,7 @@ export class FindProductUseCase {
 
   async execute(
     dto: IFindProductRequestDTO
-  ): Promise<ProductEntity | ProductEntity[]> {
+  ): Promise<ProductEntity | ProductEntity[] | Error> {
     let data = null;
 
     if (dto.id) {
@@ -17,7 +17,7 @@ export class FindProductUseCase {
           id: dto.id,
         },
       });
-      if (!data) throw new NotFoundError("product not found");
+      if (!data) return new NotFoundError("product not found");
     }
 
     if (dto.name) {
@@ -26,7 +26,7 @@ export class FindProductUseCase {
           name: dto.name,
         },
       });
-      if (!data) throw new NotFoundError("product not found");
+      if (!data) return new NotFoundError("product not found");
     }
     if (!data) {
       data = await this.ProductRepository.findMany({ where: {} });

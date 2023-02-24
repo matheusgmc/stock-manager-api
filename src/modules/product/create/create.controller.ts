@@ -12,13 +12,11 @@ export class CreateProductController {
   async handle({ body }: IHttpRequest): Promise<IHttpResponse> {
     try {
       const response = await this.useCase.execute(body);
+      if (response instanceof Error) return BadRequest(response);
+
       return Created(response);
     } catch (err: any) {
-      if (err instanceof Error) {
-        return BadRequest(err);
-      }
-
-      return ServerError(err.message);
+      return ServerError("internal");
     }
   }
 }
