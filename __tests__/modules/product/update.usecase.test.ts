@@ -25,6 +25,17 @@ describe("Product - Update - UseCase", () => {
     expect(data).toHaveProperty("name", dtoMock.data.name);
     expect(data).toHaveProperty("price_unit", dtoMock.data.price_unit);
     expect(data).toHaveProperty("amount", dtoMock.data.amount);
+    expect(data).toHaveProperty("amount", dtoMock.data.amount);
+    expect(data).toHaveProperty(
+      "updated_at",
+      new Date().toLocaleString().split(" ")[0]
+    );
+  });
+  it("should fail if no fields have been changed", async () => {
+    await expect(
+      //@ts-ignore
+      suit.execute({ ...dtoMock, data: { test: "" } })
+    ).rejects.toHaveProperty("message", "data isn't valid");
   });
 
   it("should fail if product not found", async () => {
