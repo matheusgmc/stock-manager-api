@@ -88,6 +88,12 @@ export class InMemoryProductRepository implements IProductRepository {
     this.Products[index].amount = amount;
   }
 
+  async findAndUpdateDate(id: string, updated_at: string): Promise<void> {
+    const index = this.Products.findIndex((elem) => elem.id == id);
+
+    this.Products[index].updated_at = updated_at;
+  }
+
   async findByIdAndDelete(id: string): Promise<void> {
     const index = this.Products.findIndex((elem) => elem.id == id);
     this.Products.splice(index, 1);
