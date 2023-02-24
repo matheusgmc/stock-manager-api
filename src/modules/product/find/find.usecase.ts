@@ -10,11 +10,6 @@ export class FindProductUseCase {
   ): Promise<ProductEntity | ProductEntity[]> {
     let data = null;
 
-    if (Object.entries(dto).length == 0) {
-      const data = await this.ProductRepository.findMany({ where: {} });
-      return data.map((elem) => ProductEntity.create(elem));
-    }
-
     if (dto.id) {
       data = await this.ProductRepository.findUnique({
         where: {
@@ -30,10 +25,14 @@ export class FindProductUseCase {
         },
       });
     }
+    if (!data) {
+      data = await this.ProductRepository.findMany({ where: {} });
+    }
 
     if (Array.isArray(data)) {
       return data.map((elem) => ProductEntity.create(elem));
     }
+
     return data ? ProductEntity.create(data) : [];
   }
 }
