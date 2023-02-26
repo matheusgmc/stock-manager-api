@@ -1,7 +1,8 @@
 import {
   createProductController,
+  deleteProductController,
   findProductController,
-  updateProductControlerr,
+  updateProductController,
 } from "../../modules/product/";
 import { Router, Request, Response } from "express";
 
@@ -44,9 +45,16 @@ export class ProductRoutes {
   }
 
   async update(req: Request, res: Response) {
-    const { data, error, statusCode } = await updateProductControlerr.handle({
+    const { data, error, statusCode } = await updateProductController.handle({
       params: req.params,
       body: req.body,
+    });
+    return res.status(statusCode).json(error ? { error } : data);
+  }
+
+  async delete(req: Request, res: Response) {
+    const { data, error, statusCode } = await deleteProductController.handle({
+      params: req.params,
     });
     return res.status(statusCode).json(error ? { error } : data);
   }
