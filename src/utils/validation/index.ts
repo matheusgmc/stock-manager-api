@@ -6,7 +6,7 @@ export function ObjectKeyIsValid(entity: any, obj: any): boolean {
   return (
     Object.keys(obj).filter((key) =>
       Object.prototype.hasOwnProperty.call(entity, key)
-    ).length === 0
+    ).length > 0
   );
 }
 
