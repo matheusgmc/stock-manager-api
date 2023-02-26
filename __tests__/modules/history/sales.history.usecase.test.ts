@@ -1,13 +1,13 @@
-import { SaleEntity } from "../../../src/entities";
+import { SaleEntity } from "entities";
 import {
   SalesHistoryUseCase,
   ISalesHistoryRequestDTO,
-} from "../../../src/modules/history";
+} from "../../../src/modules/history/sales-history";
 
 import {
   inMemoryHistoryRepository,
   inMemorySaleRepository,
-} from "../../repository";
+} from "../../implements";
 
 describe("History - SalesHistory - UseCase", () => {
   const suit = new SalesHistoryUseCase(inMemoryHistoryRepository);

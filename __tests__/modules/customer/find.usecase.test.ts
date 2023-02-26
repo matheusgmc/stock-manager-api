@@ -1,6 +1,6 @@
-import { CustomerEntity } from "../../../src/entities";
-import { FindCustomerUseCase } from "../../../src/modules/customer";
-import { inMemoryCustomerRepository } from "../../repository";
+import { CustomerEntity } from "entities";
+import { FindCustomerUseCase } from "../../../src/modules/customer/find";
+import { inMemoryCustomerRepository } from "../../implements";
 
 describe("Customer - Find - UseCase", () => {
   const suit = new FindCustomerUseCase(inMemoryCustomerRepository);

@@ -1,4 +1,4 @@
-import { PrismaProductRepository } from "../../../database";
+import { PrismaProductRepository } from "database/implements";
 import { FindProductController } from "./find.controller";
 import { FindProductUseCase } from "./find.usecase";
 

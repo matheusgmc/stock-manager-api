@@ -3,7 +3,7 @@ import {
   IProductRepositoryCreate,
   IProductRepositoryFindMany,
   IProductRepositoryFindUnique,
-} from "../../implements";
+} from "repositories";
 import { prisma } from "../../lib/prisma";
 import { ProductData } from "../entities";
 
@@ -35,23 +35,35 @@ export class PrismaProductRepository implements IProductRepository {
       where: data.where,
     });
   }
-  async findAndUpdateName(id: string, name: string): Promise<void> {
+  async findAndUpdateName(
+    id: string,
+    name: string,
+    updated_at: string
+  ): Promise<void> {
     await this.database.update({
       where: { id },
-      data: { name },
+      data: { name, updated_at },
     });
   }
 
-  async findAndUpdateAmount(id: string, amount: number): Promise<void> {
-    await this.database.update({ where: { id }, data: { amount } });
+  async findAndUpdateAmount(
+    id: string,
+    amount: number,
+    updated_at: string
+  ): Promise<void> {
+    await this.database.update({ where: { id }, data: { amount, updated_at } });
   }
-  async findAndUpdatePriceUnit(id: string, price_unit: number): Promise<void> {
-    await this.database.update({ where: { id }, data: { price_unit } });
+  async findAndUpdatePriceUnit(
+    id: string,
+    price_unit: number,
+    updated_at: string
+  ): Promise<void> {
+    await this.database.update({
+      where: { id },
+      data: { price_unit, updated_at },
+    });
   }
 
-  async findAndUpdateDate(id: string, updated_at: string): Promise<void> {
-    await this.database.update({ where: { id }, data: { updated_at } });
-  }
   async findByIdAndDelete(id: string): Promise<void> {
     await this.database.delete({ where: { id } });
   }

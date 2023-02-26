@@ -1,5 +1,6 @@
-import { CustomerEntity } from "../../../entities";
-import { ICustomerRepository } from "../../../implements";
+import { ICustomerRepository } from "repositories";
+import { CustomerEntity } from "entities";
+
 import { Validation } from "../../../utils/validation";
 import { IFindCustomerRequestDTO } from "./find.dto";
 

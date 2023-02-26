@@ -1,3 +1,6 @@
 import { CreateCustomerUseCase } from "./create.usecase";
+import { ICreateCustomerRequestDTO } from "./create.dto";
 
-export { CreateCustomerUseCase };
+//export const customerRepository = new Prisma
+
+export { CreateCustomerUseCase, ICreateCustomerRequestDTO };

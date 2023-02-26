@@ -1,11 +1,14 @@
-import { SaleEntity } from "../../../src/entities";
-import { CreateSaleUseCase } from "../../../src/modules/sale";
-import { ICreateSaleRequestDTO } from "../../../src/modules/sale/create/create.dto";
+import { SaleEntity } from "entities";
+import {
+  CreateSaleUseCase,
+  ICreateSaleRequestDTO,
+} from "../../../src/modules/sale/create";
+
 import {
   inMemoryCustomerRepository,
   inMemoryProductRepository,
   inMemorySaleRepository,
-} from "../../repository";
+} from "../../implements";
 
 describe("Sale - Create - UseCase", () => {
   const suit = new CreateSaleUseCase(

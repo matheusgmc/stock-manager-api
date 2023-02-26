@@ -1,7 +1,6 @@
-import { SaleData } from "../database/entities/";
-import { CustomerEntity } from "./customer.entity";
-import { PaymentEntity } from "./payment.entity";
-import { ProductEntity } from "./product.entity";
+import { PaymentEntity, ProductEntity, CustomerEntity } from "entities";
+
+import { SaleData } from "database/entities";
 
 export interface ISaleEntityNew {
   id: string;

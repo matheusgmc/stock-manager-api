@@ -1,5 +1,5 @@
 import { HistoryData } from "../database/entities/";
-import { SaleEntity } from "./sale.entity";
+import { SaleEntity } from "entities";
 
 export interface IHistoryEntityNew {
   id: string;

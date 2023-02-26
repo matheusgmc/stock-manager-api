@@ -1,5 +1,6 @@
-import { ProductEntity } from "../../../entities/product.entity";
-import { IProductRepository } from "../../../implements/product.repository.interface";
+import { IProductRepository } from "repositories";
+import { ProductEntity } from "entities";
+
 import { ICreateProductRequestDTO } from "./create.dto";
 
 import {
@@ -8,6 +9,7 @@ import {
   ParamsInvalidError,
 } from "../../errors";
 import { Validation } from "../../../utils/validation";
+import { UtilsDate } from "../../../utils/date";
 
 export class CreateProductUseCase {
   constructor(private ProductRepository: IProductRepository) {}
@@ -28,7 +30,8 @@ export class CreateProductUseCase {
     )
       return new AlreadyExistsError("product");
 
-    const today = new Date().toLocaleString().split(" ")[0];
+    const today = UtilsDate.getTodayWithoutHours();
+
     const newProduct = await this.ProductRepository.create({
       price_unit: dto.price_unit,
       amount: dto.amount,

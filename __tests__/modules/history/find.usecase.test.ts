@@ -1,6 +1,6 @@
-import { HistoryEntity } from "../../../src/entities";
-import { FindHistoryUseCase } from "../../../src/modules/history";
-import { inMemoryHistoryRepository } from "../../repository";
+import { HistoryEntity } from "entities";
+import { FindHistoryUseCase } from "../../../src/modules/history/find";
+import { inMemoryHistoryRepository } from "../../implements";
 
 describe("History - Find - UseCase", () => {
   const suit = new FindHistoryUseCase(inMemoryHistoryRepository);

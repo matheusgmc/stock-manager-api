@@ -1,5 +1,6 @@
-import { ProductEntity } from "../../../entities";
-import { IProductRepository } from "../../../implements/product.repository.interface";
+import { IProductRepository } from "repositories";
+import { ProductEntity } from "entities";
+
 import { NotFoundError } from "../../errors";
 import { IFindProductRequestDTO } from "./find.dto";
 

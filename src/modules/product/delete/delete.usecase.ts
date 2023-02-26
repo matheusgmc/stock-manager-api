@@ -1,5 +1,6 @@
-import { ProductEntity } from "../../../entities";
-import { IProductRepository } from "../../../implements";
+import { IProductRepository } from "repositories";
+import { ProductEntity } from "entities";
+
 import { IDeleteProductRequestDTO } from "./delete.dto";
 
 export class DeleteProductUseCase {

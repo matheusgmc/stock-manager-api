@@ -1,4 +1,4 @@
-import { ProductEntity } from "../../../entities";
+import { ProductEntity } from "entities";
 
 export interface IUpdateProductRequestDTO {
   id: string;

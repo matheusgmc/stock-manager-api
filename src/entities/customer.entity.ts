@@ -1,4 +1,4 @@
-import { CustomerData } from "../database/entities/customer.data.entity";
+import { CustomerData } from "database/entities";
 
 export interface ICustomerEntityNew {
   id: string;

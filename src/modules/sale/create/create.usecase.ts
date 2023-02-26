@@ -1,14 +1,16 @@
 import {
+  ICustomerRepository,
+  IProductRepository,
+  ISaleRepository,
+} from "repositories";
+
+import {
   CustomerEntity,
   PaymentEntity,
   ProductEntity,
   SaleEntity,
-} from "../../../entities";
-import {
-  ICustomerRepository,
-  IProductRepository,
-  ISaleRepository,
-} from "../../../implements";
+} from "entities";
+
 import { Validation } from "../../../utils/validation";
 import { ICreateSaleRequestDTO } from "./create.dto";
 

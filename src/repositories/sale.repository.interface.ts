@@ -1,5 +1,5 @@
 import { SaleData } from "../database/entities";
-import { CustomerEntity, PaymentEntity, ProductEntity } from "../entities";
+import { CustomerEntity, PaymentEntity, ProductEntity } from "entities";
 
 export interface ISaleRepositoryCreate {
   customer: CustomerEntity;

@@ -1,5 +1,5 @@
 import { HistoryData } from "../database/entities";
-import { SaleEntity } from "../entities";
+import { SaleEntity } from "entities";
 
 export interface IHistoryRepositoryCreate {
   sale: SaleEntity;

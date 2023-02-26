@@ -1,5 +1,5 @@
-import { DeleteProductUseCase } from "../../../src/modules/product";
-import { inMemoryProductRepository } from "../../repository";
+import { DeleteProductUseCase } from "../../../src/modules/product/delete";
+import { inMemoryProductRepository } from "../../implements";
 
 describe("Product - Delete - UseCase", () => {
   const suit = new DeleteProductUseCase(inMemoryProductRepository);

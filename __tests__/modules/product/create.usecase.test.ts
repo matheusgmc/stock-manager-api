@@ -1,10 +1,14 @@
-import { inMemoryProductRepository } from "../../repository/";
-import { CreateProductUseCase } from "../../../src/modules/product/create/";
-import { ICreateProductRequestDTO } from "../../../src/modules/product/create/create.dto";
+import { inMemoryProductRepository } from "../../implements";
+import {
+  CreateProductUseCase,
+  ICreateProductRequestDTO,
+} from "../../../src/modules/product/create/";
+
 import {
   AlreadyExistsError,
   ParamsInvalidError,
 } from "../../../src/modules/errors";
+
 describe("Product - Create - UseCase", () => {
   const suit = new CreateProductUseCase(inMemoryProductRepository);
 

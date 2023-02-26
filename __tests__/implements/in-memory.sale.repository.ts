@@ -1,10 +1,8 @@
+import { ISaleRepository, ISaleRepositoryCreate } from "repositories";
+import { SaleData } from "database/entities";
+
 import { randomUUID } from "node:crypto";
 import { inMemoryCustomerRepository, inMemoryProductRepository } from ".";
-import { SaleData } from "../../src/database/entities";
-import {
-  ISaleRepository,
-  ISaleRepositoryCreate,
-} from "../../src/implements/sale.repository.interface";
 
 export class InMemorySaleRepository implements ISaleRepository {
   Sales: SaleData[] = [

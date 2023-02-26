@@ -1,5 +1,5 @@
-import { HistoryEntity } from "../../../entities";
-import { IHistoryRepository } from "../../../implements";
+import { HistoryEntity } from "entities";
+import { IHistoryRepository } from "repositories";
 import { Validation } from "../../../utils/validation";
 import { IFindHistoryRequestDTO } from "./find.dto";
 

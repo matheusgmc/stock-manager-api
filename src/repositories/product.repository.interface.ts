@@ -29,10 +29,21 @@ export interface IProductRepository {
   findUnique(data: IProductRepositoryFindUnique): Promise<ProductData | null>;
   findMany(data: IProductRepositoryFindMany): Promise<ProductData[]>;
 
-  findAndUpdateName(id: string, name: string): Promise<void>;
-  findAndUpdatePriceUnit(id: string, price_unit: number): Promise<void>;
-  findAndUpdateAmount(id: string, amount: number): Promise<void>;
-  findAndUpdateDate(id: string, updated_at: string): Promise<void>;
+  findAndUpdateName(
+    id: string,
+    name: string,
+    updated_at: string
+  ): Promise<void>;
+  findAndUpdatePriceUnit(
+    id: string,
+    price_unit: number,
+    updated_at: string
+  ): Promise<void>;
+  findAndUpdateAmount(
+    id: string,
+    amount: number,
+    updated_at: string
+  ): Promise<void>;
 
   findByIdAndDelete(id: string): Promise<void>;
 }

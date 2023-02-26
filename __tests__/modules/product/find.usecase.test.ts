@@ -1,7 +1,7 @@
-import { ProductData } from "../../../src/database/entities/product.data.entity";
+import { ProductData } from "database/entities";
 import { NotFoundError } from "../../../src/modules/errors";
-import { FindProductUseCase } from "../../../src/modules/product";
-import { inMemoryProductRepository } from "../../repository";
+import { FindProductUseCase } from "../../../src/modules/product/find";
+import { inMemoryProductRepository } from "../../implements";
 
 describe("Product - Find - UseCase", () => {
   const suit = new FindProductUseCase(inMemoryProductRepository);

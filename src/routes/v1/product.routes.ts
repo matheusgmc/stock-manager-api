@@ -3,7 +3,7 @@ import {
   findProductController,
   updateProductControlerr,
 } from "../../modules/product/";
-import { Router, Request, Response, query } from "express";
+import { Router, Request, Response } from "express";
 
 export class ProductRoutes {
   router = Router();

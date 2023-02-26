@@ -1,6 +1,8 @@
-import { CreateCustomerUseCase } from "../../../src/modules/customer";
-import { ICreateCustomerRequestDTO } from "../../../src/modules/customer/create/create.dto";
-import { inMemoryCustomerRepository } from "../../repository";
+import {
+  CreateCustomerUseCase,
+  ICreateCustomerRequestDTO,
+} from "../../../src/modules/customer/create";
+import { inMemoryCustomerRepository } from "../../implements";
 
 describe("Customer - Create - UseCase", () => {
   const suit = new CreateCustomerUseCase(inMemoryCustomerRepository);

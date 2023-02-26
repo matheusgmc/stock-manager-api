@@ -1,11 +1,12 @@
-import { randomUUID } from "node:crypto";
-import { ProductData } from "../../src/database/entities/product.data.entity";
 import {
   IProductRepository,
   IProductRepositoryCreate,
   IProductRepositoryFindMany,
   IProductRepositoryFindUnique,
-} from "../../src/implements/product.repository.interface";
+} from "repositories";
+import { ProductData } from "database/entities";
+
+import { randomUUID } from "node:crypto";
 
 export class InMemoryProductRepository implements IProductRepository {
   Products: ProductData[] = [
@@ -73,24 +74,33 @@ export class InMemoryProductRepository implements IProductRepository {
     return products.map((elem) => new ProductData(elem));
   }
 
-  async findAndUpdateName(id: string, name: string): Promise<void> {
+  async findAndUpdateName(
+    id: string,
+    name: string,
+    updated_at: string
+  ): Promise<void> {
     const index = this.Products.findIndex((elem) => elem.id == id);
     this.Products[index].name = name;
+    this.Products[index].updated_at = updated_at;
   }
 
-  async findAndUpdatePriceUnit(id: string, price_unit: number): Promise<void> {
+  async findAndUpdatePriceUnit(
+    id: string,
+    price_unit: number,
+    updated_at: string
+  ): Promise<void> {
     const index = this.Products.findIndex((elem) => elem.id == id);
     this.Products[index].price_unit = price_unit;
+    this.Products[index].updated_at = updated_at;
   }
 
-  async findAndUpdateAmount(id: string, amount: number): Promise<void> {
+  async findAndUpdateAmount(
+    id: string,
+    amount: number,
+    updated_at: string
+  ): Promise<void> {
     const index = this.Products.findIndex((elem) => elem.id == id);
     this.Products[index].amount = amount;
-  }
-
-  async findAndUpdateDate(id: string, updated_at: string): Promise<void> {
-    const index = this.Products.findIndex((elem) => elem.id == id);
-
     this.Products[index].updated_at = updated_at;
   }
 

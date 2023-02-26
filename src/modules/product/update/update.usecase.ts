@@ -1,6 +1,8 @@
+import { ProductEntity } from "entities";
+import { IProductRepository } from "repositories";
+
 import { ProductData } from "../../../database/entities/product.data.entity";
-import { ProductEntity } from "../../../entities";
-import { IProductRepository } from "../../../implements/product.repository.interface";
+import { UtilsDate } from "../../../utils/date";
 import { Validation } from "../../../utils/validation";
 import {
   NotFoundError,
@@ -18,7 +20,7 @@ export class UpdateProductUseCase {
     if (!dto.data || Validation.ObjectIsEmpty(dto.data))
       return new ParamsRequiredError("at least one data is required");
 
-    if (Validation.ObjectKeyIsValid(ProductEntity, dto.data))
+    if (!Validation.ObjectKeyIsValid(ProductEntity, dto.data))
       return new ParamsInvalidError("data isn't valid");
 
     const original = await this.ProductRepository.findUnique({
@@ -34,29 +36,31 @@ export class UpdateProductUseCase {
       amount: getAmountToBeUsed(dto, original),
     });
 
+    const today = UtilsDate.getTodayWithoutHours();
+
     if (shouldChangeName(dto)) {
       await this.ProductRepository.findAndUpdateName(
         dto.id,
-        changedProduct.name
+        changedProduct.name,
+        today
       );
     }
 
     if (shouldChangePriceUnit(dto)) {
       await this.ProductRepository.findAndUpdatePriceUnit(
         dto.id,
-        changedProduct.price_unit
+        changedProduct.price_unit,
+        today
       );
     }
 
     if (shouldChangeAmount(dto)) {
       await this.ProductRepository.findAndUpdateAmount(
         dto.id,
-        changedProduct.amount
+        changedProduct.amount,
+        today
       );
     }
-
-    const today = new Date().toLocaleString().split(" ")[0];
-    await this.ProductRepository.findAndUpdateDate(dto.id, today);
 
     return ProductEntity.create(
       (await this.ProductRepository.findUnique({

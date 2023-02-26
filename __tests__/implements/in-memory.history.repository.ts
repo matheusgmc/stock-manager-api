@@ -1,11 +1,11 @@
 import { randomUUID } from "node:crypto";
 import { inMemorySaleRepository } from ".";
-import { HistoryData } from "../../src/database/entities/";
+import { HistoryData } from "database/entities";
 import {
   IHistoryRepository,
   IHistoryRepositoryAppend,
   IHistoryRepositoryCreate,
-} from "../../src/implements/";
+} from "repositories";
 
 export class InMemoryHistoryRepository implements IHistoryRepository {
   Logs: HistoryData[] = [

@@ -1,11 +1,11 @@
 import { randomUUID } from "node:crypto";
-import { CustomerData } from "../../src/database/entities/customer.data.entity";
+import { CustomerData } from "database/entities";
 import {
   ICustomerRepository,
   ICustomerRepositoryCreate,
   ICustomerRepositoryFindMany,
   ICustomerRepositoryFindUnique,
-} from "../../src/implements/customer.repository.interface";
+} from "repositories";
 
 export class InMemoryCustomerRepository implements ICustomerRepository {
   Customers: CustomerData[] = [

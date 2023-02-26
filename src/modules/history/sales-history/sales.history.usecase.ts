@@ -1,4 +1,5 @@
-import { IHistoryRepository } from "../../../implements";
+import { IHistoryRepository } from "repositories";
+import { UtilsDate } from "../../../utils/date";
 import { Validation } from "../../../utils/validation";
 import { ISalesHistoryRequestDTO } from "./sales.history.dto";
 
@@ -11,7 +12,7 @@ export class SalesHistoryUseCase {
     if (!dto.sale || Validation.ObjectIsEmpty(dto.sale))
       throw new Error("sale isn't valid");
 
-    const [today] = new Date().toLocaleString().split(" ");
+    const today = UtilsDate.getTodayWithoutHours();
 
     const historyIsExist = await this.HistoryRepository.findDate(today);
     if (historyIsExist) {
