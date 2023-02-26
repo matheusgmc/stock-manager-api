@@ -5,13 +5,13 @@ import { IUpdateProductRequestDTO } from "./update.dto";
 
 const ProductRepository = new PrismaProductRepository();
 const updateProductUseCase = new UpdateProductUseCase(ProductRepository);
-const updateProductControlerr = new UpdateProductController(
+const updateProductController = new UpdateProductController(
   updateProductUseCase
 );
 
 export {
   updateProductUseCase,
-  updateProductControlerr,
+  updateProductController,
   UpdateProductUseCase,
   UpdateProductController,
   IUpdateProductRequestDTO,
