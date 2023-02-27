@@ -60,10 +60,12 @@ export class SaleEntity implements ISaleEntityNew {
       throw new Error("customer is required to create a Sale");
 
     return new SaleEntity({
-      ...data,
       payment,
       product,
       customer,
+      id: data.id,
+      total_price: data.total_price,
+      created_at: data.created_at,
     });
   }
 }
