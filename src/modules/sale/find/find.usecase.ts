@@ -22,7 +22,17 @@ export class FindSaleUseCase {
       return SaleEntity.create(sale);
     }
 
-    const sales = await this.SaleRepository.findMany({});
+    const sales = await this.SaleRepository.findMany({
+      where: {
+        created_at: dto.created_at,
+        total_price: dto.total_price,
+        product_name: dto.product_name,
+        customer_name: dto.customer_name,
+        quantity_purchased: dto.quantity_purchased,
+        payment_status: dto.payment_status,
+        payment_method: dto.payment_method,
+      },
+    });
 
     return sales.map((sale) => SaleEntity.create(sale));
   }
