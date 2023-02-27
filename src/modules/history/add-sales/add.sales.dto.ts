@@ -1,5 +1,5 @@
 import { SaleEntity } from "entities";
 
-export interface ISalesHistoryRequestDTO {
+export interface IAddSalesHistoryRequestDTO {
   sale: SaleEntity;
 }

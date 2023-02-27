@@ -1,7 +1,7 @@
 import { SaleEntity } from "entities";
 import {
-  SalesHistoryUseCase,
-  ISalesHistoryRequestDTO,
+  AddSalesHistoryUseCase,
+  IAddSalesHistoryRequestDTO,
 } from "../../../src/modules/history/add-sales";
 
 import {
@@ -10,13 +10,13 @@ import {
 } from "../../implements";
 
 describe("History - Add Sales - UseCase", () => {
-  const suit = new SalesHistoryUseCase(inMemoryHistoryRepository);
+  const suit = new AddSalesHistoryUseCase(inMemoryHistoryRepository);
   it("should be defined", () => {
     expect(suit).toBeDefined();
     expect(suit.execute).toBeDefined();
   });
 
-  const dtoMock: ISalesHistoryRequestDTO = {
+  const dtoMock: IAddSalesHistoryRequestDTO = {
     sale: SaleEntity.create(inMemorySaleRepository.Sales[0]),
   };
 

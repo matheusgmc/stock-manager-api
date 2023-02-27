@@ -1,12 +1,12 @@
 import { IHistoryRepository } from "repositories";
 import { UtilsDate } from "../../../utils/date";
 import { Validation } from "../../../utils/validation";
-import { ISalesHistoryRequestDTO } from "./add.sales.dto";
+import { IAddSalesHistoryRequestDTO } from "./add.sales.dto";
 
-export class SalesHistoryUseCase {
+export class AddSalesHistoryUseCase {
   constructor(private HistoryRepository: IHistoryRepository) {}
 
-  async execute(dto: ISalesHistoryRequestDTO): Promise<void> {
+  async execute(dto: IAddSalesHistoryRequestDTO): Promise<void> {
     if (Validation.ObjectIsEmpty(dto)) throw new Error("dto isn't empty");
 
     if (!dto.sale || Validation.ObjectIsEmpty(dto.sale))

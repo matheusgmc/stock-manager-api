@@ -1,4 +1,4 @@
-import { SalesHistoryUseCase } from "./add.sales.usecase";
-import { ISalesHistoryRequestDTO } from "./add.sales.dto";
+import { AddSalesHistoryUseCase } from "./add.sales.usecase";
+import { IAddSalesHistoryRequestDTO } from "./add.sales.dto";
 
-export { SalesHistoryUseCase, ISalesHistoryRequestDTO };
+export { AddSalesHistoryUseCase, IAddSalesHistoryRequestDTO };
