@@ -26,3 +26,20 @@ model Customer {
   name String @unique
   @@map("customers")
 }
+
+model Sale{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  product_name String
+  product_price_unit_number Int
+  product_quantity_purchased Int
+
+  customer_name String
+
+  payment_status String
+  payment_method String
+  
+  total_price Int
+
+  created_at String
+}
