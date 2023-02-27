@@ -26,6 +26,7 @@ describe("Sale - Create - UseCase", () => {
     customer_id: "1",
     payment_method: "PIX",
     payment_status: "DONE",
+    quantity_purchased: 4,
   };
   it("should create a new sale successfully", async () => {
     const data = await suit.execute(saleMock);
@@ -36,12 +37,23 @@ describe("Sale - Create - UseCase", () => {
     expect(data).toHaveProperty("payment.method", "PIX");
 
     expect(data).toHaveProperty(
-      "product",
-      inMemoryProductRepository.Products[0]
+      "total_price",
+      saleMock.quantity_purchased *
+        inMemoryProductRepository.Products[0].price_unit
+    );
+
+    expect(data).toHaveProperty(
+      "product.price_unit",
+      inMemoryProductRepository.Products[0].price_unit
+    );
+    expect(data).toHaveProperty("product.quantity_purchased", 4);
+    expect(data).toHaveProperty(
+      "product.name",
+      inMemoryProductRepository.Products[0].name
     );
     expect(data).toHaveProperty(
-      "customer",
-      inMemoryCustomerRepository.Customers[0]
+      "customer.name",
+      inMemoryCustomerRepository.Customers[0].name
     );
   });
 
