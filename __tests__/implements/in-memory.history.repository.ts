@@ -31,6 +31,10 @@ export class InMemoryHistoryRepository implements IHistoryRepository {
           ...data.sale,
           payment_method: data.sale.payment.method as string,
           payment_status: data.sale.payment.status as string,
+          product_quantity_purchased: data.sale.product.quantity_purchased,
+          product_price_unit: data.sale.product.price_unit,
+          customer_name: data.sale.customer.name,
+          product_name: data.sale.product.name,
         },
       ],
       created_at: data.created_at,
@@ -46,6 +50,10 @@ export class InMemoryHistoryRepository implements IHistoryRepository {
       ...data.sale,
       payment_method: data.sale.payment.method as string,
       payment_status: data.sale.payment.status as string,
+      product_quantity_purchased: data.sale.product.quantity_purchased,
+      product_price_unit: data.sale.product.price_unit,
+      customer_name: data.sale.customer.name,
+      product_name: data.sale.product.name,
     });
   }
 
