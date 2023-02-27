@@ -1,13 +1,13 @@
 import { SaleData } from "../database/entities";
-import { CustomerEntity, PaymentEntity, ProductEntity } from "entities";
+import { SaleEntity } from "entities";
 
-export interface ISaleRepositoryCreate {
-  customer: CustomerEntity;
-  product: ProductEntity;
-  payment: PaymentEntity;
-  created_at: string;
+export type ISaleRepositoryCreate = Omit<SaleEntity, "id">;
+
+export interface ISaleRepositoryFindUniqueData {
+  where: Partial<Pick<SaleEntity, "id">>;
 }
 
 export interface ISaleRepository {
   create(data: ISaleRepositoryCreate): Promise<SaleData>;
+  findUnique(data: ISaleRepositoryFindUniqueData): Promise<SaleData | null>;
 }
