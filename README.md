@@ -16,8 +16,5 @@
 ### Sale - UseCases
 
 - create a new Sale, it must have payment method and status, product sold and the customer
-
-### History - UseCases
-
-- create a new history, on the day if it doesn't exist
-- update a history by adding a new Sale
+- find unique or many sales
+- get history by date or between two dates with all sales
