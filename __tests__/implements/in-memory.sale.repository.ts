@@ -67,11 +67,12 @@ export class InMemorySaleRepository implements ISaleRepository {
     const sales = [];
     this.Sales.forEach((sale) => {
       if (
-        sale.payment_method == data.where.payment.method ||
-        sale.payment_status == data.where.payment.status ||
-        sale.product_name == data.where.product.name ||
-        sale.customer_name == data.where.customer.name ||
-        sale.total_price == data.where.total_price
+        sale.payment_method == data.where.payment_method ||
+        sale.payment_status == data.where.payment_status ||
+        sale.product_name == data.where.product_name ||
+        sale.customer_name == data.where.customer_name ||
+        sale.total_price == data.where.total_price ||
+        sale.product_quantity_purchased == data.where.quantity_purchased
       ) {
         sales.push(sale);
       }
