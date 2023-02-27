@@ -1,4 +1,8 @@
-import { ISaleRepository, ISaleRepositoryCreate } from "repositories";
+import {
+  ISaleRepository,
+  ISaleRepositoryCreate,
+  ISaleRepositoryFindUniqueData,
+} from "repositories";
 import { SaleData } from "database/entities";
 
 import { randomUUID } from "node:crypto";
@@ -11,8 +15,11 @@ export class InMemorySaleRepository implements ISaleRepository {
       id: "1",
       payment_status: "DONE",
       payment_method: "PIX",
-      product: inMemoryProductRepository.Products[0],
-      customer: inMemoryCustomerRepository.Customers[0],
+      product_name: inMemoryProductRepository.Products[0].name,
+      product_price_unit: inMemoryProductRepository.Products[0].price_unit,
+      total_price: inMemoryProductRepository.Products[0].price_unit * 4,
+      customer_name: inMemoryCustomerRepository.Customers[0].name,
+      product_quantity_purchased: 4,
     },
 
     {
@@ -20,17 +27,22 @@ export class InMemorySaleRepository implements ISaleRepository {
       id: "2",
       payment_status: "PENDING",
       payment_method: "CASH",
-      product: inMemoryProductRepository.Products[1],
-      customer: inMemoryCustomerRepository.Customers[1],
+      product_name: inMemoryProductRepository.Products[1].name,
+      product_price_unit: inMemoryProductRepository.Products[1].price_unit,
+      total_price: inMemoryProductRepository.Products[1].price_unit * 4,
+      customer_name: inMemoryCustomerRepository.Customers[1].name,
+      product_quantity_purchased: 4,
     },
   ];
 
   async create(data: ISaleRepositoryCreate): Promise<SaleData> {
     const newSale: SaleData = {
       id: randomUUID(),
-      product: data.product,
-      customer: data.customer,
-
+      product_price_unit: data.product.price_unit,
+      product_quantity_purchased: data.product.quantity_purchased,
+      customer_name: data.customer.name,
+      product_name: data.product.name,
+      total_price: data.total_price,
       payment_method: data.payment.method,
       payment_status: data.payment.status,
 
@@ -40,5 +52,12 @@ export class InMemorySaleRepository implements ISaleRepository {
     this.Sales.push(newSale);
 
     return new SaleData(newSale);
+  }
+
+  async findUnique(
+    data: ISaleRepositoryFindUniqueData
+  ): Promise<SaleData | null> {
+    const sale = this.Sales.find((sale) => data.where.id === sale.id);
+    return sale ? new SaleData(sale) : null;
   }
 }
