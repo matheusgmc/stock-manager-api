@@ -1,15 +1,15 @@
-import { CustomerData } from "./customer.data.entity";
-import { ProductData } from "./product.data.entity";
-
 export class SaleData {
   id: string;
+  product_name: string;
+  product_price_unit: number;
+  product_quantity_purchased: number;
 
-  product: ProductData;
-
-  customer: CustomerData;
+  customer_name: string;
 
   payment_status: string;
   payment_method: string;
+  total_price: number;
+
   created_at: string;
 
   constructor(props: SaleData) {
