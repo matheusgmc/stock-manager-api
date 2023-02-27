@@ -16,7 +16,8 @@ export interface ISaleRepositoryFindManyData {
     created_at?: string;
     payment_method?: string;
     payment_status?: string;
-
+  };
+  between?: {
     date_start?: string;
     date_end?: string;
   };
