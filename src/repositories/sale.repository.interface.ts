@@ -8,7 +8,15 @@ export interface ISaleRepositoryFindUniqueData {
 }
 
 export interface ISaleRepositoryFindManyData {
-  where?: Partial<Omit<SaleEntity, "id">>;
+  where?: {
+    product_name?: string;
+    customer_name?: string;
+    total_price?: number;
+    quantity_purchased?: number;
+    created_at?: string;
+    payment_method?: string;
+    payment_status?: string;
+  };
 }
 
 export interface ISaleRepository {
