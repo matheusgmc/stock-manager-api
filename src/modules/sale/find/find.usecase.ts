@@ -1,5 +1,5 @@
 import { SaleEntity } from "entities";
-import { NotFoundError } from "modules/errors";
+import { NotFoundError, ParamsInvalidError } from "modules/errors";
 import { ISaleRepository } from "repositories/sale.repository.interface";
 import { Validation } from "utils/validation";
 import { IFindSaleRequestDTO } from "./find.dto";
@@ -21,11 +21,13 @@ export class FindSaleUseCase {
       if (!sale) return new NotFoundError("sale not found");
       return SaleEntity.create(sale);
     }
+    if (dto.total_price && !Number(dto.total_price))
+      return new ParamsInvalidError("total_price isn't a number");
 
     const sales = await this.SaleRepository.findMany({
       where: {
         created_at: dto.created_at,
-        total_price: dto.total_price,
+        total_price: Number(dto.total_price),
         product_name: dto.product_name,
         customer_name: dto.customer_name,
         quantity_purchased: dto.quantity_purchased,
