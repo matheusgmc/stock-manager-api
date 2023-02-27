@@ -13,10 +13,9 @@ describe("Sales - History - UseCase", () => {
     const data = (await suit.execute({
       date_start: "2023-02-20T00:00:00.000Z",
     })) as SaleEntity[];
-    expect(data).toHaveLength(1);
+    expect(data).toHaveLength(2);
     data.map((item) => {
       expect(item).toBeInstanceOf(SaleEntity);
-      expect(item).toHaveProperty("id", "1");
     });
   });
 

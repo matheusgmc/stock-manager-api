@@ -10,17 +10,18 @@ export class HistorySalesUseCase {
   async execute(dto: IHistorySalesRequestDTO): Promise<SaleEntity[] | Error> {
     if (Validation.ObjectIsEmpty(dto))
       return new ParamsRequiredError("date is required");
-
-    if (new Date(dto.date_start).toString() == "Invalid Date")
+    const date_start = new Date(dto.date_start).toISOString();
+    if (date_start == "Invalid Date")
       return new ParamsInvalidError("date_start must be a date valid");
 
     if (dto.date_end && new Date(dto.date_end).toString() == "Invalid Date")
       return new ParamsInvalidError("date_end must be a date valid");
+    const date_end = new Date(dto.date_end).setUTCHours(23, 59, 59);
 
     const sales = await this.SalesRepository.findMany({
-      where: {
-        date_start: dto.date_start,
-        date_end: dto.date_end ? dto.date_end : dto.date_start,
+      between: {
+        date_start,
+        date_end: dto.date_end ? new Date(date_end).toISOString() : undefined,
       },
     });
 
