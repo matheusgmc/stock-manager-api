@@ -45,14 +45,18 @@ export class CreateSaleUseCase {
       status: dto.payment_status,
       method: dto.payment_method,
     });
-    const customer = CustomerEntity.create(customerData);
     const product = ProductEntity.create(productData);
+    const customer = CustomerEntity.create(customerData);
 
     const newSale = await this.SaleRepository.create({
       customer,
-      product,
+      product: {
+        ...product,
+        quantity_purchased: dto.quantity_purchased,
+      },
       payment,
-      created_at: Date.now().toString(),
+      total_price: dto.quantity_purchased * product.price_unit,
+      created_at: new Date().toISOString(),
     });
 
     return SaleEntity.create(newSale);
