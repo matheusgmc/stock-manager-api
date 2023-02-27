@@ -34,7 +34,13 @@ export class PrismaSaleRepository implements ISaleRepository {
 
   async findMany(data: ISaleRepositoryFindManyData): Promise<SaleData[]> {
     const sales = await this.database.findMany({
-      where: data.where,
+      where: {
+        ...data.where,
+        created_at: {
+          lte: data.between?.date_end,
+          gte: data.between?.date_start,
+        },
+      },
     });
     return sales.map((sale) => new SaleData(sale));
   }

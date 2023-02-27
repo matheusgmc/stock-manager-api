@@ -63,26 +63,37 @@ export class InMemorySaleRepository implements ISaleRepository {
   }
 
   async findMany(data: ISaleRepositoryFindManyData): Promise<SaleData[]> {
-    if (!data.where) return this.Sales;
+    if (!data.where && !data.between) return this.Sales;
     const sales = [];
-    const date_start = Date.parse(data.where.date_start);
-    const date_end = Date.parse(data.where.date_end);
-
+    const date_start = Date.parse(data?.between?.date_start);
+    const date_end = Date.parse(data?.between?.date_end);
     this.Sales.forEach((sale) => {
       if (
-        sale.payment_method == data.where.payment_method ||
-        sale.payment_status == data.where.payment_status ||
-        sale.product_name == data.where.product_name ||
-        sale.customer_name == data.where.customer_name ||
-        sale.total_price == data.where.total_price ||
-        sale.product_quantity_purchased == data.where.quantity_purchased ||
-        sale.created_at.split("T")[0] == data.where.created_at?.split("T")[0] ||
-        (Date.parse(sale.created_at) >= date_start &&
-          Date.parse(sale.created_at) <= date_end)
+        this.compareObjects(sale, data.where) ||
+        this.betweenTwoDates(sale.created_at, date_start, date_end)
       ) {
         sales.push(sale);
       }
     });
     return sales;
+  }
+  private compareObjects(obj: SaleData, where: any): boolean {
+    if (!where) return false;
+    return (
+      obj.customer_name == where.customer_name ||
+      obj.payment_method == where.payment_method ||
+      obj.payment_status == where.payment_status ||
+      obj.total_price == where.total_price ||
+      obj.product_name == where.product_name ||
+      obj.product_quantity_purchased == where.quantity_purchased
+    );
+  }
+  private betweenTwoDates(target: string, start: number, end: number): boolean {
+    const parse = Date.parse(target);
+    if (!end) {
+      return parse >= start;
+    }
+
+    return parse >= start && parse <= end;
   }
 }
