@@ -1,4 +1,5 @@
 import { CreateSaleUseCase } from "./create.usecase";
 import { ICreateSaleRequestDTO } from "./create.dto";
+import { CreateSaleController } from "./create.controller";
 
-export { CreateSaleUseCase, ICreateSaleRequestDTO };
+export { CreateSaleController, CreateSaleUseCase, ICreateSaleRequestDTO };
