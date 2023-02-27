@@ -31,7 +31,7 @@ model Sale{
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   product_name String
-  product_price_unit_number Int
+  product_price_unit Int
   product_quantity_purchased Int
 
   customer_name String
@@ -42,4 +42,6 @@ model Sale{
   total_price Int
 
   created_at String
+
+  @@map("sales")
 }
