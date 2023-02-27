@@ -1,5 +1,5 @@
 import express, { Express } from "express";
-import { CustomerRoutes, ProductRoutes } from "./routes/v1";
+import { CustomerRoutes, ProductRoutes, SaleRoutes } from "./routes/v1";
 export class App {
   app: Express;
   constructor() {
@@ -15,6 +15,7 @@ export class App {
   routes() {
     this.app.use(new ProductRoutes().router);
     this.app.use(new CustomerRoutes().router);
+    this.app.use(new SaleRoutes().router);
   }
 
   listen(port: number) {
