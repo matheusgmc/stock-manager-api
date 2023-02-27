@@ -12,7 +12,7 @@ import { inMemoryCustomerRepository, inMemoryProductRepository } from ".";
 export class InMemorySaleRepository implements ISaleRepository {
   Sales: SaleData[] = [
     {
-      created_at: new Date().toLocaleString(),
+      created_at: "2023-02-20T00:00:00.000Z",
       id: "1",
       payment_status: "DONE",
       payment_method: "PIX",
@@ -24,7 +24,7 @@ export class InMemorySaleRepository implements ISaleRepository {
     },
 
     {
-      created_at: new Date().toLocaleString(),
+      created_at: "2023-02-23T00:00:00.000Z",
       id: "2",
       payment_status: "PENDING",
       payment_method: "CASH",
@@ -65,6 +65,9 @@ export class InMemorySaleRepository implements ISaleRepository {
   async findMany(data: ISaleRepositoryFindManyData): Promise<SaleData[]> {
     if (!data.where) return this.Sales;
     const sales = [];
+    const date_start = Date.parse(data.where.date_start);
+    const date_end = Date.parse(data.where.date_end);
+
     this.Sales.forEach((sale) => {
       if (
         sale.payment_method == data.where.payment_method ||
@@ -72,7 +75,10 @@ export class InMemorySaleRepository implements ISaleRepository {
         sale.product_name == data.where.product_name ||
         sale.customer_name == data.where.customer_name ||
         sale.total_price == data.where.total_price ||
-        sale.product_quantity_purchased == data.where.quantity_purchased
+        sale.product_quantity_purchased == data.where.quantity_purchased ||
+        sale.created_at.split("T")[0] == data.where.created_at?.split("T")[0] ||
+        (Date.parse(sale.created_at) >= date_start &&
+          Date.parse(sale.created_at) <= date_end)
       ) {
         sales.push(sale);
       }
