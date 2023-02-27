@@ -27,7 +27,7 @@ export class FindSaleUseCase {
     const sales = await this.SaleRepository.findMany({
       where: {
         created_at: dto.created_at,
-        total_price: Number(dto.total_price),
+        total_price: dto.total_price ? dto.total_price : undefined,
         product_name: dto.product_name,
         customer_name: dto.customer_name,
         quantity_purchased: dto.quantity_purchased,
