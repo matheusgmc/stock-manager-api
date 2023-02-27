@@ -1,6 +1,7 @@
 import {
   ISaleRepository,
   ISaleRepositoryCreate,
+  ISaleRepositoryFindManyData,
   ISaleRepositoryFindUniqueData,
 } from "repositories";
 import { SaleData } from "database/entities";
@@ -59,5 +60,22 @@ export class InMemorySaleRepository implements ISaleRepository {
   ): Promise<SaleData | null> {
     const sale = this.Sales.find((sale) => data.where.id === sale.id);
     return sale ? new SaleData(sale) : null;
+  }
+
+  async findMany(data: ISaleRepositoryFindManyData): Promise<SaleData[]> {
+    if (!data.where) return this.Sales;
+    const sales = [];
+    this.Sales.forEach((sale) => {
+      if (
+        sale.payment_method == data.where.payment.method ||
+        sale.payment_status == data.where.payment.status ||
+        sale.product_name == data.where.product.name ||
+        sale.customer_name == data.where.customer.name ||
+        sale.total_price == data.where.total_price
+      ) {
+        sales.push(sale);
+      }
+    });
+    return sales;
   }
 }

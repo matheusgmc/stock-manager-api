@@ -2,6 +2,7 @@ import { prisma } from "lib/prisma";
 import {
   ISaleRepository,
   ISaleRepositoryCreate,
+  ISaleRepositoryFindManyData,
   ISaleRepositoryFindUniqueData,
 } from "repositories/sale.repository.interface";
 import { SaleData } from "../entities";
@@ -29,5 +30,12 @@ export class PrismaSaleRepository implements ISaleRepository {
       where: data.where,
     });
     return new SaleData(sale);
+  }
+
+  async findMany(data: ISaleRepositoryFindManyData): Promise<SaleData[]> {
+    const sales = await this.database.findMany({
+      where: data.where,
+    });
+    return sales.map((sale) => new SaleData(sale));
   }
 }
