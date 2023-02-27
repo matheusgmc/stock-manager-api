@@ -49,10 +49,13 @@ export class CreateSaleUseCase {
     const customer = CustomerEntity.create(customerData);
 
     const newSale = await this.SaleRepository.create({
-      customer,
+      customer: {
+        name: customer.name,
+      },
       product: {
-        ...product,
         quantity_purchased: dto.quantity_purchased,
+        name: product.name,
+        price_unit: product.price_unit,
       },
       payment,
       total_price: dto.quantity_purchased * product.price_unit,
