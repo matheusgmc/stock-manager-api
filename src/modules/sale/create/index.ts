@@ -1,18 +1,16 @@
 import { CreateSaleUseCase } from "./create.usecase";
 import { ICreateSaleRequestDTO } from "./create.dto";
 import { CreateSaleController } from "./create.controller";
-import { PrismaSaleRepository } from "database/implements/prisma.sale.repository";
-import { PrismaProductRepository } from "database/implements/prisma.product.repository";
-import { PrismaCustomerRepository } from "database/implements/prisma.customer.repository";
-
-const saleRepository = new PrismaSaleRepository();
-const productRepository = new PrismaProductRepository();
-const customerRepository = new PrismaCustomerRepository();
+import {
+  prismaProductRepository,
+  prismaSaleRepository,
+  prismaCustomerRepository,
+} from "database/implements";
 
 const createSaleUseCase = new CreateSaleUseCase(
-  saleRepository,
-  productRepository,
-  customerRepository
+  prismaSaleRepository,
+  prismaProductRepository,
+  prismaCustomerRepository
 );
 
 const createSaleController = new CreateSaleController(createSaleUseCase);

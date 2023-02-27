@@ -1,11 +1,12 @@
+import { prismaCustomerRepository } from "database/implements";
+
 import { CreateCustomerUseCase } from "./create.usecase";
 import { ICreateCustomerRequestDTO } from "./create.dto";
-import { PrismaCustomerRepository } from "database/implements/prisma.customer.repository";
 import { CreateCustomerController } from "./create.controller";
 
-export const customerRepository = new PrismaCustomerRepository();
-
-const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
+const createCustomerUseCase = new CreateCustomerUseCase(
+  prismaCustomerRepository
+);
 
 const createCustomerController = new CreateCustomerController(
   createCustomerUseCase

@@ -1,11 +1,10 @@
-import { PrismaProductRepository } from "database/implements/prisma.product.repository";
+import { prismaProductRepository } from "database/implements";
+
 import { DeleteProductController } from "./delete.controller";
 import { DeleteProductUseCase } from "./delete.usecase";
 import { IDeleteProductRequestDTO } from "./delete.dto";
 
-const prismaRepository = new PrismaProductRepository();
-
-const deleteProductUseCase = new DeleteProductUseCase(prismaRepository);
+const deleteProductUseCase = new DeleteProductUseCase(prismaProductRepository);
 const deleteProductController = new DeleteProductController(
   deleteProductUseCase
 );
