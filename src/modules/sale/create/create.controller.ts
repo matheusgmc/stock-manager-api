@@ -17,6 +17,7 @@ export class CreateSaleController {
         customer_id: body.customer_id,
         payment_method: body.payment_method,
         payment_status: body.payment_status,
+        quantity_purchased: body.quantity_purchased,
       });
 
       if (response instanceof Error) return BadRequest(response);
