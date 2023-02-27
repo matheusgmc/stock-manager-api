@@ -1,7 +1,7 @@
 import { IHistoryRepository } from "repositories";
 import { UtilsDate } from "../../../utils/date";
 import { Validation } from "../../../utils/validation";
-import { ISalesHistoryRequestDTO } from "./sales.history.dto";
+import { ISalesHistoryRequestDTO } from "./add.sales.dto";
 
 export class SalesHistoryUseCase {
   constructor(private HistoryRepository: IHistoryRepository) {}

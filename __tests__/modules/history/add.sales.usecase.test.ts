@@ -2,14 +2,14 @@ import { SaleEntity } from "entities";
 import {
   SalesHistoryUseCase,
   ISalesHistoryRequestDTO,
-} from "../../../src/modules/history/sales-history";
+} from "../../../src/modules/history/add-sales";
 
 import {
   inMemoryHistoryRepository,
   inMemorySaleRepository,
 } from "../../implements";
 
-describe("History - SalesHistory - UseCase", () => {
+describe("History - Add Sales - UseCase", () => {
   const suit = new SalesHistoryUseCase(inMemoryHistoryRepository);
   it("should be defined", () => {
     expect(suit).toBeDefined();
