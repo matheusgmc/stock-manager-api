@@ -18,6 +18,7 @@ export class ProductRoutes {
     this.router.get(this.path, this.find);
     this.router.get(this.path + "/:id", this.findById);
     this.router.put(this.path + "/:id", this.update);
+    this.router.delete(this.path + "/:id", this.delete);
   }
 
   async create(req: Request, res: Response) {
