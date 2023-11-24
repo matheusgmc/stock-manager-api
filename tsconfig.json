@@ -5,22 +5,14 @@
     "rootDir": "./",
     "baseUrl": "./src",
     "paths": {
-      "repositories/*": [
-        "repositories/*"
-      ],
-      "entities/index.ts": [
-        "entities/index.ts"
-      ],
-      "database/entities/*": [
-        "database/entities/*"
-      ],
-      "database/implements/*": [
-        "database/implements/*"
-      ]
+      "repositories/*": ["repositories/*"],
+      "entities/index.ts": ["entities/index.ts"],
+      "database/entities/*": ["database/entities/*"],
+      "database/implements/*": ["database/implements/*"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": true,
     "skipLibCheck": true
   }
 }

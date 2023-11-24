@@ -1,18 +1,12 @@
-import { CustomerData } from "../database/entities/customer.data.entity";
-
-export type ICustomerRepositoryCreate = Omit<CustomerData, "id">;
+import { CustomerEntity } from "entities/customer.entity";
 
 export interface ICustomerRepositoryFindUnique {
-  where: Partial<Pick<CustomerData, "id" | "name">>;
-}
-
-export interface ICustomerRepositoryFindMany {
-  where: Partial<CustomerData>;
+  where: Partial<Pick<CustomerEntity, "id" | "name">>;
 }
 
 export interface ICustomerRepository {
-  create(data: ICustomerRepositoryCreate): Promise<CustomerData>;
-
-  findUnique(data: ICustomerRepositoryFindUnique): Promise<CustomerData | null>;
-  findMany(data: ICustomerRepositoryFindMany): Promise<CustomerData[]>;
+  create(data: CustomerEntity): Promise<void>;
+  findUnique(
+    data: ICustomerRepositoryFindUnique,
+  ): Promise<CustomerEntity | null>;
 }

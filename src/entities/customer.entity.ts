@@ -1,18 +1,21 @@
-import { CustomerData } from "database/entities";
+import crypto from "node:crypto";
 
 export interface ICustomerEntityNew {
-  id: string;
+  id?: string;
   name: string;
 }
-export class CustomerEntity implements ICustomerEntityNew {
+
+export class CustomerEntity {
   id: string;
   name: string;
 
   constructor(props: ICustomerEntityNew) {
-    Object.assign(this, props);
-    Object.freeze(this);
+    this.id = props.id;
+    this.name = props.name;
   }
-  static create(data: CustomerData): CustomerEntity {
+  static create(data: ICustomerEntityNew): CustomerEntity {
+    if (!data.id) data.id = crypto.randomUUID();
+
     return new CustomerEntity(data);
   }
 }
