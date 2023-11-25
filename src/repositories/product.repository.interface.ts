@@ -1,49 +1,13 @@
-import {
-  ProductData,
-  IProductDataNew,
-} from "../database/entities/product.data.entity";
-
-export type IProductRepositoryCreate = Omit<
-  IProductDataNew,
-  "id" | "amount" | "updated_at"
-> & {
-  amount?: number;
-};
+import { ProductEntity } from "entities/product.entity";
 
 export interface IProductRepositoryFindUnique {
-  where: Partial<Pick<IProductDataNew, "id" | "name">>;
-}
-
-export interface IProductRepositoryFindMany {
-  where: Partial<IProductDataNew>;
-}
-
-export interface IProductRepositoryUpdate {
-  where: Pick<IProductDataNew, "id">;
-  data?: Partial<Omit<IProductDataNew, "id">>;
+  where: Partial<Pick<ProductEntity, "id" | "name">>;
 }
 
 export interface IProductRepository {
-  create(data: IProductRepositoryCreate): Promise<ProductData>;
+  create(data: ProductEntity): Promise<void>;
 
-  findUnique(data: IProductRepositoryFindUnique): Promise<ProductData | null>;
-  findMany(data: IProductRepositoryFindMany): Promise<ProductData[]>;
+  update(data: ProductEntity): Promise<void>;
 
-  findAndUpdateName(
-    id: string,
-    name: string,
-    updated_at: string
-  ): Promise<void>;
-  findAndUpdatePriceUnit(
-    id: string,
-    price_unit: number,
-    updated_at: string
-  ): Promise<void>;
-  findAndUpdateAmount(
-    id: string,
-    amount: number,
-    updated_at: string
-  ): Promise<void>;
-
-  findByIdAndDelete(id: string): Promise<void>;
+  findUnique(data: IProductRepositoryFindUnique): Promise<ProductEntity | null>;
 }
