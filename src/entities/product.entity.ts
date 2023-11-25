@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 export interface IProductEntityNew {
   id?: string;
   name: string;
-  price_unit: number;
+  unit_price: number;
   amount?: number;
   created_at?: Date;
   updated_at?: Date;
@@ -11,7 +11,7 @@ export interface IProductEntityNew {
 export class ProductEntity {
   id: string;
   name: string;
-  price_unit: number;
+  unit_price: number;
   amount: number;
   created_at: Date;
   updated_at: Date;
@@ -26,7 +26,7 @@ export class ProductEntity {
   }
 
   changePrice(value: number) {
-    this.price_unit = value;
+    this.unit_price = value;
     this.updated_at = new Date();
   }
 

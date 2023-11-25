@@ -1,16 +1,10 @@
 import { ProductEntity } from "entities/product.entity";
 import { IProductUpdateRequestDTO, ProductUseCases } from "modules/product";
-import { UtilsDate } from "utils/date";
 import {
   DtoIsEmptyError,
   NotFoundError,
-  ParamsInvalidError,
   ParamsRequiredError,
 } from "../../../src/modules/errors";
-import {
-  UpdateProductUseCase,
-  IUpdateProductRequestDTO,
-} from "../../../src/modules/product/update";
 
 import { inMemoryProductRepository } from "../../implements";
 
@@ -25,7 +19,7 @@ describe("Product - Update - UseCase", () => {
     id: "1",
     data: {
       name: "mock_test_1",
-      price_unit: 2,
+      unit_price: 2,
       amount: 10,
     },
   };
@@ -36,7 +30,7 @@ describe("Product - Update - UseCase", () => {
     expect(data).toBeInstanceOf(ProductEntity);
     expect(data).toHaveProperty("id", dtoMock.id);
     expect(data).toHaveProperty("name", dtoMock.data.name);
-    expect(data).toHaveProperty("price_unit", dtoMock.data.price_unit);
+    expect(data).toHaveProperty("unit_price", dtoMock.data.unit_price);
     expect(data).toHaveProperty("amount", 10);
   });
 

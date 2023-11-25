@@ -6,7 +6,7 @@ export class InMemoryProductRepository implements IProductRepository {
     new ProductEntity({
       id: "1",
       name: "test_mock_1",
-      price_unit: 1,
+      unit_price: 1,
       amount: 1,
       created_at: new Date("21/02/2023"),
       updated_at: new Date("21/02/2023"),
@@ -14,7 +14,7 @@ export class InMemoryProductRepository implements IProductRepository {
     new ProductEntity({
       id: "2",
       name: "test_mock_2",
-      price_unit: 1,
+      unit_price: 1,
       amount: 1,
       created_at: new Date("22/02/2023"),
       updated_at: new Date("23/02/2023"),

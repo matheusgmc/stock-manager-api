@@ -16,7 +16,7 @@ describe("Product - FindById - UseCase", () => {
 
     expect(data).toHaveProperty("id", "1");
     expect(data).toHaveProperty("name", "test_mock_1");
-    expect(data).toHaveProperty("price_unit", 1);
+    expect(data).toHaveProperty("unit_price", 1);
     expect(data).toHaveProperty("amount", 1);
   });
 

@@ -1,8 +1,4 @@
 import { inMemoryProductRepository } from "../../implements";
-import {
-  CreateProductUseCase,
-  ICreateProductRequestDTO,
-} from "../../../src/modules/product/create/";
 
 import {
   AlreadyExistsError,
@@ -20,7 +16,7 @@ describe("Product - Create - UseCase", () => {
 
   const dto: IProductCreateRequestDTO = {
     name: "test_1",
-    price_unit: 1,
+    unit_price: 1,
   };
 
   it("should successfully create a new product with amount", async () => {
@@ -32,7 +28,7 @@ describe("Product - Create - UseCase", () => {
 
     expect(data).toHaveProperty("id");
     expect(data).toHaveProperty("name", dto.name);
-    expect(data).toHaveProperty("price_unit", dto.price_unit);
+    expect(data).toHaveProperty("unit_price", dto.unit_price);
     expect(data).toHaveProperty("amount", 10);
   });
 
@@ -45,7 +41,7 @@ describe("Product - Create - UseCase", () => {
 
     expect(data).toHaveProperty("id");
     expect(data).toHaveProperty("name", "test_2");
-    expect(data).toHaveProperty("price_unit", dto.price_unit);
+    expect(data).toHaveProperty("unit_price", dto.unit_price);
     expect(data).toHaveProperty("amount", 0);
   });
 
@@ -59,10 +55,10 @@ describe("Product - Create - UseCase", () => {
 
   it("should fail if create a new product without price", async () => {
     //@ts-ignore
-    const data = await suit.create({ ...dto, price_unit: "" });
+    const data = await suit.create({ ...dto, unit_price: "" });
 
     expect(data).toBeInstanceOf(ParamsInvalidError);
-    expect(data).toHaveProperty("message", "PRICE_UNIT_PARAMS_INVALID");
+    expect(data).toHaveProperty("message", "UNIT_PRICE_PARAMS_INVALID");
     expect(data).toHaveProperty("name", "ParamsInvalid");
   });
 
