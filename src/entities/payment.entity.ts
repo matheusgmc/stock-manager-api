@@ -9,11 +9,7 @@ export interface IPaymentEntityNew {
   method: IPaymentMethod;
 }
 
-export interface IPaymentEntityCreate {
-  status: string;
-  method: string;
-}
-export class PaymentEntity implements IPaymentEntityNew {
+export class PaymentEntity {
   status: IPaymentStatus;
   method: IPaymentMethod;
 
@@ -21,16 +17,16 @@ export class PaymentEntity implements IPaymentEntityNew {
     Object.assign(this, props);
     Object.freeze(this);
   }
-  static create(data: IPaymentEntityCreate): PaymentEntity {
+  static create(data: IPaymentEntityNew): PaymentEntity | Error {
     if (!PAYMENT_STATUS.includes(data.status as any))
-      throw new Error("payment status is invalid");
+      return new Error("PAYMENT_STATUS_IS_INVALID");
 
     if (!PAYMENT_METHODS.includes(data.method as any))
-      throw new Error("payment method is invalid");
+      return new Error("PAYMENT_METHOD_IS_INVALID");
 
     return new PaymentEntity({
-      status: data.status as IPaymentStatus,
-      method: data.method as IPaymentMethod,
+      status: data.status,
+      method: data.method,
     });
   }
 }

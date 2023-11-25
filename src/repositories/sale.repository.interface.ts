@@ -1,30 +1,20 @@
-import { SaleData } from "../database/entities";
-import { SaleEntity } from "entities";
-
-export type ISaleRepositoryCreate = Omit<SaleEntity, "id">;
+import { IPaymentMethod, IPaymentStatus, SaleEntity } from "entities";
 
 export interface ISaleRepositoryFindUniqueData {
   where: Partial<Pick<SaleEntity, "id">>;
 }
 
 export interface ISaleRepositoryFindManyData {
-  where?: {
-    product_name?: string;
-    customer_name?: string;
-    total_price?: number;
-    quantity_purchased?: number;
-    created_at?: string;
-    payment_method?: string;
-    payment_status?: string;
-  };
-  between?: {
-    date_start?: string;
-    date_end?: string;
+  where: {
+    product_id?: string;
+    customer_id?: string;
+    payment_method?: IPaymentMethod;
+    payment_status?: IPaymentStatus;
   };
 }
-
 export interface ISaleRepository {
-  create(data: ISaleRepositoryCreate): Promise<SaleData>;
-  findUnique(data: ISaleRepositoryFindUniqueData): Promise<SaleData | null>;
-  findMany(data: ISaleRepositoryFindManyData): Promise<SaleData[]>;
+  create(data: SaleEntity): Promise<void>;
+  findUnique(data: ISaleRepositoryFindUniqueData): Promise<SaleEntity | null>;
+
+  findMany(data: ISaleRepositoryFindManyData): Promise<SaleEntity[]>;
 }

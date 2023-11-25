@@ -1,71 +1,55 @@
-import { PaymentEntity } from "entities";
-
-import { SaleData } from "database/entities";
-import { Validation } from "utils/validation";
-
-type ISaleProduct = {
-  name: string;
-  price_unit: number;
-  quantity_purchased: number;
-};
-
-type ISaleCustomer = {
-  name: string;
-};
+import crypto from "node:crypto";
+import {
+  CustomerEntity,
+  ICustomerEntityNew,
+  IPaymentEntityNew,
+  IProductEntityNew,
+  PaymentEntity,
+  ProductEntity,
+} from "entities";
 
 export interface ISaleEntityNew {
-  id: string;
-  product: ISaleProduct;
-  customer: ISaleCustomer;
+  id?: string;
+  total_price?: number;
+  created_at?: Date;
+
+  product: ProductEntity;
+  customer: CustomerEntity;
   payment: PaymentEntity;
-  total_price: number;
-  created_at: string;
+  qtd: number;
 }
 
-export class SaleEntity implements ISaleEntityNew {
+export class SaleEntity {
   id: string;
-  product: ISaleProduct;
-  customer: ISaleCustomer;
+  product: ProductEntity;
+  customer: CustomerEntity;
   payment: PaymentEntity;
   total_price: number;
-  created_at: string;
+  qtd: number;
+  created_at: Date;
 
   constructor(props: ISaleEntityNew) {
     Object.assign(this, props);
-    Object.freeze(this);
   }
 
-  static create(data: SaleData): SaleEntity {
-    if (!data) throw new Error("data must not be empty to create a Sale");
+  static create(data: ISaleEntityNew): SaleEntity | Error {
+    if (data.product.amount < data.qtd)
+      return new Error("ERR_PRODUCT_AMOUNT_IS_NOT_ENOUGH");
 
-    const product: ISaleProduct = {
-      price_unit: data.product_price_unit,
-      quantity_purchased: data.product_quantity_purchased,
-      name: data.product_name,
-    };
+    if (!data.id) {
+      data.id = crypto.randomUUID();
+    }
 
-    const payment = PaymentEntity.create({
-      method: data.payment_method,
-      status: data.payment_status,
-    });
+    if (!data.created_at) {
+      data.created_at = new Date();
+    }
 
-    if (Validation.ObjectIsEmpty(product))
-      throw new Error("product is required to create a Sale");
+    if (!data.total_price) {
+      data.total_price = data.product.unit_price * data.qtd;
+    }
 
-    const customer: ISaleCustomer = {
-      name: data.customer_name,
-    };
+    data.product.decrementAmount(data.qtd);
 
-    if (Validation.ObjectIsEmpty(customer))
-      throw new Error("customer is required to create a Sale");
-
-    return new SaleEntity({
-      payment,
-      product,
-      customer,
-      id: data.id,
-      total_price: data.total_price,
-      created_at: data.created_at,
-    });
+    return new SaleEntity(data);
   }
 }
