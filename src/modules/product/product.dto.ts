@@ -1,6 +1,6 @@
 export interface IProductCreateRequestDTO {
   name: string;
-  price_unit: number;
+  unit_price: number;
   amount?: number;
 }
 
@@ -8,7 +8,7 @@ export interface IProductUpdateRequestDTO {
   id: string;
   data: {
     name?: string;
-    price_unit?: number;
+    unit_price?: number;
     amount?: number;
   };
 }

@@ -18,7 +18,7 @@ export class ProductUseCases {
 
   async create(data: IProductCreateRequestDTO): Promise<ProductEntity | Error> {
     if (!data.name) return new ParamsInvalidError("name");
-    if (!data.price_unit) return new ParamsInvalidError("price_unit");
+    if (!data.unit_price) return new ParamsInvalidError("unit_price");
 
     if (
       await this.productRepository.findUnique({
@@ -61,8 +61,8 @@ export class ProductUseCases {
       product.changeName(data.name);
     }
 
-    if (data.price_unit) {
-      product.changePrice(data.price_unit);
+    if (data.unit_price) {
+      product.changePrice(data.unit_price);
     }
 
     if (data.amount) {
