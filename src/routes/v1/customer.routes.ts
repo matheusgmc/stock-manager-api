@@ -1,8 +1,6 @@
 import { Request, Response, Router } from "express";
-import {
-  createCustomerController,
-  findCustomerController,
-} from "modules/customer";
+import { customerController } from "modules/customer";
+import { IHttpResponse } from "utils/http";
 
 export class CustomerRoutes {
   router = Router();
@@ -18,17 +16,23 @@ export class CustomerRoutes {
   }
 
   async create(req: Request, res: Response) {
-    const { data, error, statusCode } = await createCustomerController.handle({
+    const result = await customerController.create({
       body: req.body,
     });
-    return res.status(statusCode).json(error ? { error } : data);
+
+    return this.makeResponse(res, result);
   }
 
   async find(req: Request, res: Response) {
-    const { data, error, statusCode } = await findCustomerController.handle({
+    const result = await customerController.find({
       query: req.query,
     });
+    return this.makeResponse(res, result);
+  }
 
-    return res.status(statusCode).json(error ? { error } : data);
+  private makeResponse(res: Response, result: IHttpResponse) {
+    return res
+      .status(result.statusCode)
+      .json(result.error ? { error: result.error } : result.data);
   }
 }
