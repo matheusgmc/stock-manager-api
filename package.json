@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx tsx watch src/server.ts",
     "test": "jest --watch",
-    "prisma:gen": "npx prisma generate"
+    "prisma:gen": "npx prisma generate",
+    "build": "npx tsc --build"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
