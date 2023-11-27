@@ -13,10 +13,12 @@ datasource db {
 model Product {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String @unique
-  price_unit Int
+  unit_price Int
   amount Int @default(0)
-  created_at String
-  updated_at String
+  created_at DateTime
+  updated_at DateTime
+
+  sales Sale[]
 
   @@map("products")
 } 
@@ -24,24 +26,28 @@ model Product {
 model Customer {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String @unique
+
+  sales Sale[]
+
   @@map("customers")
 }
 
 model Sale{
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  product_name String
-  product_price_unit Int
-  product_quantity_purchased Int
+  product Product @relation(fields: [product_id],references:[id])
+  product_id String @db.ObjectId
 
-  customer_name String
+  customer Customer @relation(fields:[customer_id],references:[id])
+  customer_id String @db.ObjectId
 
   payment_status String
   payment_method String
   
   total_price Int
+  qtd Int
 
-  created_at String
+  created_at DateTime
 
   @@map("sales")
 }
