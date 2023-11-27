@@ -1,7 +1,5 @@
 import { Request, Response, Router } from "express";
-import { createSaleController } from "modules/sale";
-import { findSaleController } from "modules/sale/find";
-import { historySalesController } from "modules/sale/history";
+import { saleController } from "modules/sale";
 
 export class SaleRoutes {
   router = Router();
@@ -12,25 +10,18 @@ export class SaleRoutes {
   initialization() {
     this.router.post(this.path, this.create);
     this.router.get(this.path, this.find);
-    this.router.get(this.path + "/history", this.history);
   }
 
   async create(req: Request, res: Response) {
-    const { data, error, statusCode } = await createSaleController.handle({
+    const { data, error, statusCode } = await saleController.create({
       body: req.body,
     });
     return res.status(statusCode).json(error ? { error } : data);
   }
 
   async find(req: Request, res: Response) {
-    const { data, error, statusCode } = await findSaleController.handle({
-      query: req.query,
-    });
-    return res.status(statusCode).json(error ? { error } : data);
-  }
-  async history(req: Request, res: Response) {
-    const { data, error, statusCode } = await historySalesController.handle({
-      query: req.query,
+    const { data, error, statusCode } = await saleController.find({
+      query: { ...req.query, ...req.params },
     });
     return res.status(statusCode).json(error ? { error } : data);
   }

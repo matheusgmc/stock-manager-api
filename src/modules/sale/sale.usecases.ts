@@ -14,6 +14,7 @@ import {
   ISaleFindByIdRequestDTO,
   ISaleFindByPaymentRequestDTO,
   ISaleFindByProductIdRequestDTO,
+  ISaleFindRequestDTO,
 } from "./sale.dto";
 
 export class SaleUseCases {
@@ -61,6 +62,12 @@ export class SaleUseCases {
     await this.productRepository.update(product);
 
     return sale;
+  }
+
+  async find(data: ISaleFindRequestDTO) {
+    if (Object.keys(data).length === 0) return new DtoIsEmptyError("data");
+
+    return await this.saleRepository.findMany({ where: data });
   }
 
   async findById(

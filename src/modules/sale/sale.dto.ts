@@ -24,3 +24,6 @@ export interface ISaleFindByPaymentRequestDTO {
   method?: IPaymentMethod;
   status?: IPaymentStatus;
 }
+export interface ISaleFindRequestDTO
+  extends ISaleFindByCustomerIdRequestDTO,
+  ISaleFindByProductIdRequestDTO { }
