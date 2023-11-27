@@ -5,8 +5,8 @@ export type IPaymentStatus = (typeof PAYMENT_STATUS)[number];
 export type IPaymentMethod = (typeof PAYMENT_METHODS)[number];
 
 export interface IPaymentEntityNew {
-  status: IPaymentStatus;
-  method: IPaymentMethod;
+  status: IPaymentStatus | string;
+  method: IPaymentMethod | string;
 }
 
 export class PaymentEntity {
@@ -14,7 +14,8 @@ export class PaymentEntity {
   method: IPaymentMethod;
 
   constructor(props: IPaymentEntityNew) {
-    Object.assign(this, props);
+    this.status = props.status;
+    this.method = props.method;
     Object.freeze(this);
   }
   static create(data: IPaymentEntityNew): PaymentEntity | Error {

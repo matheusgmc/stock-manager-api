@@ -17,7 +17,12 @@ export class ProductEntity {
   updated_at: Date;
 
   constructor(props: IProductEntityNew) {
-    Object.assign(this, props);
+    this.id = props.id;
+    this.name = props.name;
+    this.unit_price = props.unit_price;
+    this.amount = props.amount;
+    this.created_at = props.created_at;
+    this.updated_at = props.updated_at;
   }
 
   changeName(value: string) {

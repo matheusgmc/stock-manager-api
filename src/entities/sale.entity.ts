@@ -1,20 +1,14 @@
 import crypto from "node:crypto";
-import {
-  CustomerEntity,
-  ICustomerEntityNew,
-  IPaymentEntityNew,
-  IProductEntityNew,
-  PaymentEntity,
-  ProductEntity,
-} from "entities";
+import { CustomerEntity, PaymentEntity, ProductEntity } from "entities";
+import { Entity } from "utils/types";
 
 export interface ISaleEntityNew {
   id?: string;
   total_price?: number;
   created_at?: Date;
 
-  product: ProductEntity;
-  customer: CustomerEntity;
+  product: Entity<ProductEntity>;
+  customer: Entity<CustomerEntity>;
   payment: PaymentEntity;
   qtd: number;
 }
@@ -29,7 +23,13 @@ export class SaleEntity {
   created_at: Date;
 
   constructor(props: ISaleEntityNew) {
-    Object.assign(this, props);
+    this.id = props.id;
+    this.product = props.product;
+    this.customer = props.customer;
+    this.payment = props.payment;
+    this.total_price = props.total_price;
+    this.qtd = props.qtd;
+    this.created_at = props.created_at;
   }
 
   static create(data: ISaleEntityNew): SaleEntity | Error {
