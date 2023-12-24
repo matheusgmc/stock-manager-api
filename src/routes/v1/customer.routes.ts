@@ -16,23 +16,17 @@ export class CustomerRoutes {
   }
 
   async create(req: Request, res: Response) {
-    const result = await customerController.create({
+    const { statusCode, error, data } = await customerController.create({
       body: req.body,
     });
 
-    return this.makeResponse(res, result);
+    return res.status(statusCode).json(error ? { error } : data);
   }
 
   async find(req: Request, res: Response) {
-    const result = await customerController.find({
+    const { data, error, statusCode } = await customerController.find({
       query: req.query,
     });
-    return this.makeResponse(res, result);
-  }
-
-  private makeResponse(res: Response, result: IHttpResponse) {
-    return res
-      .status(result.statusCode)
-      .json(result.error ? { error: result.error } : result.data);
+    return res.status(statusCode).json(error ? { error } : data);
   }
 }
