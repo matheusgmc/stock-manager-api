@@ -47,14 +47,14 @@ export class PrismaSaleRepository implements ISaleRepository {
   }
 
   private makeEntity(data: Sale): SaleEntity {
-    return new SaleEntity({
+    return SaleEntity.build({
       id: data.id,
       qtd: data.qtd,
       created_at: data.created_at,
-      payment: new PaymentEntity({
+      payment: PaymentEntity.create({
         method: data.payment_method,
         status: data.payment_status,
-      }),
+      }) as PaymentEntity,
       total_price: data.total_price,
       product: {
         id: data.product_id,

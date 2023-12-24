@@ -3,27 +3,33 @@ import { CustomerEntity, PaymentEntity, ProductEntity } from "entities";
 import { Entity } from "utils/types";
 
 export interface ISaleEntityNew {
-  id?: string;
-  total_price?: number;
-  created_at?: Date;
-
-  product: Entity<ProductEntity>;
-  customer: Entity<CustomerEntity>;
+  product: ProductEntity;
+  customer: CustomerEntity;
   payment: PaymentEntity;
   qtd: number;
 }
 
-export class SaleEntity {
+export interface ISaleEntity {
   id: string;
-  product: ProductEntity;
-  customer: CustomerEntity;
+  product: Entity<ProductEntity>;
+  customer: Entity<CustomerEntity>;
+  payment: PaymentEntity;
+  total_price: number;
+  qtd: number;
+  created_at: Date;
+}
+
+export class SaleEntity implements ISaleEntity {
+  id: string;
+  product: Entity<ProductEntity>;
+  customer: Entity<CustomerEntity>;
   payment: PaymentEntity;
   total_price: number;
   qtd: number;
   created_at: Date;
 
-  constructor(props: ISaleEntityNew) {
-    this.id = props.id;
+  constructor(props: Omit<ISaleEntity, "id">, id?: string) {
+    this.id = id || crypto.randomUUID();
     this.product = props.product;
     this.customer = props.customer;
     this.payment = props.payment;
@@ -36,20 +42,19 @@ export class SaleEntity {
     if (data.product.amount < data.qtd)
       return new Error("ERR_PRODUCT_AMOUNT_IS_NOT_ENOUGH");
 
-    if (!data.id) {
-      data.id = crypto.randomUUID();
-    }
-
-    if (!data.created_at) {
-      data.created_at = new Date();
-    }
-
-    if (!data.total_price) {
-      data.total_price = data.product.unit_price * data.qtd;
-    }
+    const created_at = new Date();
+    const total_price = data.product.unit_price * data.qtd;
 
     data.product.decrementAmount(data.qtd);
 
-    return new SaleEntity(data);
+    return new SaleEntity({
+      ...data,
+      total_price,
+      created_at,
+    });
+  }
+
+  static build(data: ISaleEntity): SaleEntity {
+    return new SaleEntity(data, data.id);
   }
 }

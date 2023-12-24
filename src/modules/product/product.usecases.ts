@@ -31,6 +31,10 @@ export class ProductUseCases {
 
     const product = ProductEntity.create(data);
 
+    if (product instanceof Error) {
+      return product;
+    }
+
     await this.productRepository.create(product);
 
     return product;

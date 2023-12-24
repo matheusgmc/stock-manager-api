@@ -8,6 +8,7 @@ export interface IProductEntityNew {
   created_at?: Date;
   updated_at?: Date;
 }
+
 export class ProductEntity {
   id: string;
   name: string;
@@ -47,10 +48,8 @@ export class ProductEntity {
     this.amount -= value;
   }
 
-  static create(data: IProductEntityNew): ProductEntity {
-    if (!data.id) {
-      data.id = crypto.randomUUID();
-    }
+  static create(data: IProductEntityNew): ProductEntity | Error {
+    data.id = crypto.randomUUID();
 
     if (!data.created_at && !data.updated_at) {
       data.created_at = new Date();
@@ -61,6 +60,14 @@ export class ProductEntity {
       data.amount = 0;
     }
 
+    if (data.amount < 0) {
+      return new Error("ERR_PRODUCT_AMOUNT_NEGATIVE");
+    }
+
+    return new ProductEntity(data);
+  }
+
+  static build(data: IProductEntityNew): ProductEntity {
     return new ProductEntity(data);
   }
 }

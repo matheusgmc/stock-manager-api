@@ -23,7 +23,7 @@ describe("Sale - Find - UseCase", () => {
 
   beforeAll(() => {
     const products = product_ids.map((e, i) => {
-      const product = ProductEntity.create({
+      const product = ProductEntity.build({
         id: e,
         name: `Product ${i}`,
         unit_price: 10,
@@ -43,7 +43,7 @@ describe("Sale - Find - UseCase", () => {
     });
 
     inMemorySaleRepository.create(
-      SaleEntity.create({
+      SaleEntity.build({
         id: sale_id,
         product: products[0],
         customer: customers[0],
@@ -51,8 +51,10 @@ describe("Sale - Find - UseCase", () => {
           method: "PIX",
           status: "DONE",
         },
+        total_price: 4 * products[0].unit_price,
+        created_at: new Date(),
         qtd: 4,
-      }) as SaleEntity,
+      }),
     );
     [
       SaleEntity.create({

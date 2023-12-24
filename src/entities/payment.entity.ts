@@ -9,11 +9,16 @@ export interface IPaymentEntityNew {
   method: IPaymentMethod | string;
 }
 
-export class PaymentEntity {
+export interface IPaymentEntity {
+  status: IPaymentStatus;
+  method: IPaymentMethod;
+}
+
+export class PaymentEntity implements IPaymentEntity {
   status: IPaymentStatus;
   method: IPaymentMethod;
 
-  constructor(props: IPaymentEntityNew) {
+  constructor(props: IPaymentEntity) {
     this.status = props.status;
     this.method = props.method;
     Object.freeze(this);
@@ -26,8 +31,8 @@ export class PaymentEntity {
       return new Error("PAYMENT_METHOD_IS_INVALID");
 
     return new PaymentEntity({
-      status: data.status,
-      method: data.method,
+      status: data.status as IPaymentStatus,
+      method: data.method as IPaymentMethod,
     });
   }
 }

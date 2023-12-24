@@ -1,4 +1,3 @@
-import { CustomerData } from "database/entities";
 import {
   ICustomerRepository,
   ICustomerRepositoryFindUnique,
@@ -6,7 +5,7 @@ import {
 import { CustomerEntity } from "entities/customer.entity";
 
 export class InMemoryCustomerRepository implements ICustomerRepository {
-  private Customers: CustomerData[] = [
+  private Customers: CustomerEntity[] = [
     {
       id: "1",
       name: "test_mock_1",
@@ -25,7 +24,7 @@ export class InMemoryCustomerRepository implements ICustomerRepository {
 
   async findUnique(
     data: ICustomerRepositoryFindUnique,
-  ): Promise<CustomerData | null> {
+  ): Promise<CustomerEntity | null> {
     const customer = this.Customers.find(
       (elem) => elem.id == data.where.id || elem.name == data.where.name,
     );

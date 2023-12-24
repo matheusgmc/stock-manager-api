@@ -22,7 +22,7 @@ describe("Sale - Create - UseCase", () => {
 
   beforeAll(() => {
     inMemoryProductRepository.create(
-      ProductEntity.create({
+      ProductEntity.build({
         name: "Product",
         unit_price: 10,
         amount: 4,

@@ -3,7 +3,7 @@ import { ProductEntity } from "entities/product.entity";
 
 export class InMemoryProductRepository implements IProductRepository {
   private Products: ProductEntity[] = [
-    new ProductEntity({
+    ProductEntity.build({
       id: "1",
       name: "test_mock_1",
       unit_price: 1,
@@ -11,7 +11,7 @@ export class InMemoryProductRepository implements IProductRepository {
       created_at: new Date("21/02/2023"),
       updated_at: new Date("21/02/2023"),
     }),
-    new ProductEntity({
+    ProductEntity.build({
       id: "2",
       name: "test_mock_2",
       unit_price: 1,
