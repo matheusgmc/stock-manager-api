@@ -6,7 +6,7 @@ import {
   ParamsRequiredError,
 } from "modules/errors";
 import { ICustomerRepository } from "repositories/customer.repository.interface";
-import { IProductRepository } from "repositories/product.repository.interface";
+import { IOrderRepository } from "repositories/order.repository.interface";
 import { ISaleRepository } from "repositories/sale.repository.interface";
 import {
   ISaleCreateRequestDTO,
@@ -20,14 +20,14 @@ import {
 export class SaleUseCases {
   constructor(
     private saleRepository: ISaleRepository,
-    private productRepository: IProductRepository,
     private customerRepository: ICustomerRepository,
+    private orderRepository: IOrderRepository,
   ) { }
   async create(data: ISaleCreateRequestDTO): Promise<SaleEntity | Error> {
     if (!data || Object.keys(data || {}).length === 0)
       return new DtoIsEmptyError("data");
 
-    if (!data.product_id) return new ParamsRequiredError("product_id");
+    if (!data.order_ids) return new ParamsRequiredError("sale_ids");
     if (!data.customer_id) return new ParamsRequiredError("customer_id");
 
     const payment = PaymentEntity.create({
@@ -37,11 +37,11 @@ export class SaleUseCases {
 
     if (payment instanceof Error) return payment;
 
-    const product = await this.productRepository.findUnique({
-      where: { id: data.product_id },
+    const orders = await this.orderRepository.findMany({
+      id: data.order_ids,
     });
 
-    if (!product) return new NotFoundError("product");
+    if (!orders.length) return new NotFoundError("product");
 
     const customer = await this.customerRepository.findUnique({
       where: { id: data.customer_id },
@@ -50,16 +50,14 @@ export class SaleUseCases {
     if (!customer) return new NotFoundError("customer");
 
     const sale = SaleEntity.create({
-      qtd: data.qtd,
       payment,
-      product,
+      orders,
       customer,
     });
 
     if (sale instanceof Error) return sale;
 
     await this.saleRepository.create(sale);
-    await this.productRepository.update(product);
 
     return sale;
   }

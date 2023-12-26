@@ -1,11 +1,10 @@
 import { IPaymentMethod, IPaymentStatus } from "entities/payment.entity";
 
 export interface ISaleCreateRequestDTO {
-  product_id: string;
+  order_ids: string[];
   customer_id: string;
   payment_method: IPaymentMethod;
   payment_status: IPaymentStatus;
-  qtd: number;
 }
 
 export interface ISaleFindByIdRequestDTO {

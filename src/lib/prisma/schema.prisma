@@ -11,20 +11,20 @@ datasource db {
 }
 
 model Product {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @unique
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String   @unique
   unit_price Int
-  amount Int @default(0)
+  amount     Int      @default(0)
   created_at DateTime
   updated_at DateTime
 
-  sales Sale[]
+  Order Order[]
 
   @@map("products")
-} 
+}
 
 model Customer {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String @unique
 
   sales Sale[]
@@ -32,22 +32,33 @@ model Customer {
   @@map("customers")
 }
 
-model Sale{
+model Sale {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  product Product @relation(fields: [product_id],references:[id])
-  product_id String @db.ObjectId
+  orders Order[]
 
-  customer Customer @relation(fields:[customer_id],references:[id])
-  customer_id String @db.ObjectId
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id String   @db.ObjectId
 
   payment_status String
   payment_method String
-  
+
   total_price Int
-  qtd Int
 
   created_at DateTime
 
   @@map("sales")
+}
+
+model Order {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  product     Product @relation(fields: [product_id], references: [id])
+  product_id  String  @db.ObjectId
+  qtd         Int
+  total_price Int
+
+  Sale   Sale?   @relation(fields: [saleId], references: [id])
+  saleId String? @db.ObjectId
+
+  @@map("orders")
 }

@@ -42,4 +42,34 @@ export class PrismaProductRepository implements IProductRepository {
     });
     return response ? new ProductEntity(response) : null;
   }
+
+  async findManyIds(data: string[]): Promise<ProductEntity[]> {
+    const response = await this.db.findMany({
+      where: {
+        id: {
+          in: data,
+        },
+      },
+    });
+    return response.map((e) => ProductEntity.build(e));
+  }
+
+  async updateMany(data: ProductEntity[]): Promise<void> {
+    await prisma.$transaction(
+      data.map((e) =>
+        this.db.update({
+          where: {
+            id: e.id,
+          },
+          data: {
+            name: e.name,
+            amount: e.amount,
+            updated_at: e.updated_at,
+            created_at: e.created_at,
+          },
+        }),
+      ),
+    );
+    return;
+  }
 }

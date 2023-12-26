@@ -3,18 +3,20 @@ import { SaleEntity } from "entities/sale.entity";
 import { SaleUseCases } from "modules/sale";
 import {
   inMemoryCustomerRepository,
+  inMemoryOrderRepository,
   inMemoryProductRepository,
   inMemorySaleRepository,
 } from "../../implements";
 
 import { ProductEntity } from "entities/product.entity";
 import { CustomerEntity } from "entities/customer.entity";
+import { OrderEntity } from "entities/order.entity";
 
 describe("Sale - Find - UseCase", () => {
   const suit = new SaleUseCases(
     inMemorySaleRepository,
-    inMemoryProductRepository,
     inMemoryCustomerRepository,
+    inMemoryOrderRepository,
   );
 
   const product_ids = [crypto.randomUUID(), crypto.randomUUID()];
@@ -42,10 +44,16 @@ describe("Sale - Find - UseCase", () => {
       return customer;
     });
 
+    const orders = products.map((e) =>
+      OrderEntity.create({
+        qtd: 1,
+        product: e,
+      }),
+    ) as OrderEntity[];
+
     inMemorySaleRepository.create(
       SaleEntity.build({
         id: sale_id,
-        product: products[0],
         customer: customers[0],
         payment: {
           method: "PIX",
@@ -53,27 +61,24 @@ describe("Sale - Find - UseCase", () => {
         },
         total_price: 4 * products[0].unit_price,
         created_at: new Date(),
-        qtd: 4,
+        orders: [orders[0]],
       }),
     );
     [
       SaleEntity.create({
-        product: products[0],
+        orders: [orders[0]],
         customer: customers[0],
         payment: { method: "PIX", status: "DONE" },
-        qtd: 3,
       }),
       SaleEntity.create({
-        product: products[1],
+        orders: [orders[1]],
         customer: customers[1],
         payment: { method: "PIX", status: "DONE" },
-        qtd: 3,
       }),
       SaleEntity.create({
-        product: products[1],
+        orders: [orders[1]],
         customer: customers[1],
         payment: { method: "CASH", status: "PENDING" },
-        qtd: 3,
       }),
     ].map((e) => inMemorySaleRepository.create(e as SaleEntity));
   });
@@ -91,7 +96,6 @@ describe("Sale - Find - UseCase", () => {
     expect(data).toHaveProperty("id", sale_id);
     expect(data).toHaveProperty("payment.method", "PIX");
     expect(data).toHaveProperty("payment.status", "DONE");
-    expect(data).toHaveProperty("product.id", product_ids[0]);
     expect(data).toHaveProperty("customer.id", customer_ids[0]);
     expect(data).toHaveProperty("total_price", 40);
   });
@@ -105,18 +109,6 @@ describe("Sale - Find - UseCase", () => {
     data.map((sale) => {
       expect(sale).toBeInstanceOf(SaleEntity);
       expect(sale).toHaveProperty("customer.id", customer_ids[0]);
-    });
-  });
-
-  it("should successfully return all sales by product id", async () => {
-    const data = (await suit.findByProductId({
-      product_id: product_ids[0],
-    })) as SaleEntity[];
-
-    expect(data).toHaveLength(2);
-    data.map((sale) => {
-      expect(sale).toBeInstanceOf(SaleEntity);
-      expect(sale).toHaveProperty("product.id", product_ids[0]);
     });
   });
 

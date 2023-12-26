@@ -19,9 +19,10 @@ export class PrismaSaleRepository implements ISaleRepository {
         payment_status: data.payment.status,
         payment_method: data.payment.method,
         created_at: data.created_at,
-        qtd: data.qtd,
-        product: {
-          connect: { id: data.product.id },
+        orders: {
+          connect: data.orders.map((e) => ({
+            id: e.id,
+          })),
         },
         customer: {
           connect: { id: data.customer.id },
@@ -49,16 +50,13 @@ export class PrismaSaleRepository implements ISaleRepository {
   private makeEntity(data: Sale): SaleEntity {
     return SaleEntity.build({
       id: data.id,
-      qtd: data.qtd,
       created_at: data.created_at,
       payment: PaymentEntity.create({
         method: data.payment_method,
         status: data.payment_status,
       }) as PaymentEntity,
       total_price: data.total_price,
-      product: {
-        id: data.product_id,
-      },
+      orders: [],
       customer: {
         id: data.customer_id,
       },

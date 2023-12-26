@@ -8,6 +8,8 @@ export interface IProductRepository {
   create(data: ProductEntity): Promise<void>;
 
   update(data: ProductEntity): Promise<void>;
+  updateMany(data: ProductEntity[]): Promise<void>;
 
   findUnique(data: IProductRepositoryFindUnique): Promise<ProductEntity | null>;
+  findManyIds(data: string[]): Promise<ProductEntity[]>;
 }

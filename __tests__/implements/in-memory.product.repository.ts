@@ -46,4 +46,17 @@ export class InMemoryProductRepository implements IProductRepository {
     });
     return product || null;
   }
+
+  async updateMany(data: ProductEntity[]): Promise<void> {
+    this.Products.forEach((e, i) => {
+      const product = data.find((value) => value.id === e.id);
+      if (product) this.Products[i] = product;
+    });
+
+    return Promise.resolve();
+  }
+
+  async findManyIds(data: string[]): Promise<ProductEntity[]> {
+    return Promise.resolve(this.Products.filter((e) => data.includes(e.id)));
+  }
 }

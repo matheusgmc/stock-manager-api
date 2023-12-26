@@ -5,6 +5,7 @@ import {
 } from "repositories";
 
 import { SaleEntity } from "entities/sale.entity";
+import { OrderEntity } from "entities/order.entity";
 
 export class InMemorySaleRepository implements ISaleRepository {
   private Sales: SaleEntity[] = [];
@@ -27,11 +28,11 @@ export class InMemorySaleRepository implements ISaleRepository {
       data.where;
 
     return this.Sales.filter(
-      ({ payment, product, customer }) =>
-        product.id === product_id ||
+      ({ payment, customer, orders }) =>
         customer.id === customer_id ||
         payment.status === payment_status ||
-        payment.method === payment_method,
+        payment.method === payment_method ||
+        orders.find((e: OrderEntity) => e.product.id === product_id),
     );
   }
 }
