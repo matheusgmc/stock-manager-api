@@ -29,12 +29,16 @@ export class OrderEntity implements IOrderEntity {
 
   static create(data: IOrderEntityNew): OrderEntity | Error {
     const { product, qtd } = data;
+
     if (product.amount < qtd)
       return new Error("ERR_PRODUCT_AMOUNT_IS_NOT_ENOUGH");
 
     product.decrementAmount(qtd);
 
     const total_price = qtd * product.unit_price;
+
+    if (Number.isNaN(total_price))
+      return new Error("ERR_TOTAL_PRICE_IS_INVALID");
 
     return new OrderEntity({
       product,

@@ -20,7 +20,7 @@ export class OrderCreateRequestDTO {
 
     if (!data.qtd) return new ParamsRequiredError("qtd");
 
-    if (Number.isNaN(data.qtd)) return new ParamsInvalidError("qtd");
+    if (Number.isNaN(Number(data.qtd))) return new ParamsInvalidError("qtd");
 
     return new OrderCreateRequestDTO(data);
   }

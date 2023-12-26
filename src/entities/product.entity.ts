@@ -1,15 +1,21 @@
 import crypto from "node:crypto";
 
 export interface IProductEntityNew {
-  id?: string;
   name: string;
   unit_price: number;
   amount?: number;
-  created_at?: Date;
-  updated_at?: Date;
 }
 
-export class ProductEntity {
+export interface IProductEntity {
+  id: string;
+  name: string;
+  unit_price: number;
+  amount: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export class ProductEntity implements IProductEntity {
   id: string;
   name: string;
   unit_price: number;
@@ -17,8 +23,8 @@ export class ProductEntity {
   created_at: Date;
   updated_at: Date;
 
-  constructor(props: IProductEntityNew) {
-    this.id = props.id;
+  constructor(props: Omit<IProductEntity, "id">, id?: string) {
+    this.id = id || crypto.randomUUID();
     this.name = props.name;
     this.unit_price = props.unit_price;
     this.amount = props.amount;
@@ -49,12 +55,8 @@ export class ProductEntity {
   }
 
   static create(data: IProductEntityNew): ProductEntity | Error {
-    data.id = crypto.randomUUID();
-
-    if (!data.created_at && !data.updated_at) {
-      data.created_at = new Date();
-      data.updated_at = new Date();
-    }
+    const created_at = new Date();
+    const updated_at = new Date();
 
     if (!data.amount) {
       data.amount = 0;
@@ -64,10 +66,16 @@ export class ProductEntity {
       return new Error("ERR_PRODUCT_AMOUNT_NEGATIVE");
     }
 
-    return new ProductEntity(data);
+    return new ProductEntity({
+      updated_at,
+      created_at,
+      amount: data.amount,
+      unit_price: data.unit_price,
+      name: data.name,
+    });
   }
 
-  static build(data: IProductEntityNew): ProductEntity {
-    return new ProductEntity(data);
+  static build(data: IProductEntity): ProductEntity {
+    return new ProductEntity(data, data.id);
   }
 }

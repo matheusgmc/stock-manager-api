@@ -30,6 +30,8 @@ describe("Sale - Find - UseCase", () => {
         name: `Product ${i}`,
         unit_price: 10,
         amount: 100,
+        created_at: new Date(),
+        updated_at: new Date(),
       });
       inMemoryProductRepository.create(product);
       return product;

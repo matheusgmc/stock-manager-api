@@ -27,6 +27,9 @@ describe("Sale - Create - UseCase", () => {
     name: "Product",
     unit_price: 10,
     amount: 4,
+    id: crypto.randomUUID(),
+    created_at: new Date(),
+    updated_at: new Date(),
   });
 
   const sale = OrderEntity.create({
